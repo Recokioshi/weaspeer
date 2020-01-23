@@ -5,7 +5,7 @@ interface IHomeProps extends RouteComponentProps {
   user: string;
 }
 
-const Home: React.FC<IHomeProps> = ({ user}) => {
+const Home: React.FC<IHomeProps> = ({ user }) => {
   return (
     <div className="App">
       <header className="App-header">
