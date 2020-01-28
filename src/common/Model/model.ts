@@ -1,6 +1,8 @@
 import firebaseApp from '../Firebase/Firebase';
 
-export const isAuthenticated = (): boolean => !!firebaseApp.auth().currentUser;
+export const isAuthenticated = (): boolean => {
+  return !!firebaseApp.auth().currentUser;
+};
 
 export const authStateChangeListener = (
   onLogin: Function,

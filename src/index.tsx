@@ -3,10 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App/App';
 import * as serviceWorker from './serviceWorker';
-
-import reducer from './common/Redux/reducer';
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import store from './common/Redux/store';
 import { Provider } from 'react-redux';
 
 import firebaseApp from './common/Firebase/Firebase';
@@ -14,8 +11,6 @@ import firebaseApp from './common/Firebase/Firebase';
 if (!firebaseApp) {
   console.error('Firebase app is not loaded!');
 }
-
-const store = createStore(reducer, applyMiddleware(thunk));
 
 const StoredApp = () => (
   <Provider store={store}>

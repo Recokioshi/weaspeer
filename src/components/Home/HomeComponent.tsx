@@ -1,15 +1,11 @@
 import React from 'react';
-import { RouteComponentProps } from '@reach/router';
+import { HomeProps } from './HomeTypes';
 
-interface IHomeProps extends RouteComponentProps {
-  user: string;
-}
-
-const Home: React.FC<IHomeProps> = ({ user }) => {
+const Home: React.FC<HomeProps> = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <p>Welcome to HomeComponent, {user}</p>
+        <p>Welcome to HomeComponent</p>
       </header>
     </div>
   );

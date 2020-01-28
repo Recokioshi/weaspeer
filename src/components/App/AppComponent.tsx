@@ -2,37 +2,40 @@ import Home from '../Home/Home';
 import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
 
-import { redirectIfUnauthorized } from './duck/AppOperations';
+import { redirectToLoginIfNeeded } from './duck/AppOperations';
 import { paths } from '../../common/Router/constants';
 
 import React, { useEffect } from 'react';
 import { Router } from '@reach/router';
 import { AppProps } from './AppTypes';
+import Loading from '../Loading/LoadingComponent';
 
 let unsubscribeAuthorization = () => {};
 
+const setAuthorizationListener = (listenToAuthChanges: Function) => {
+  unsubscribeAuthorization = listenToAuthChanges();
+};
+
 const App: React.FC<AppProps> = ({ authorized, checkingForAuthorization, listenToAuthChanges }) => {
   useEffect(() => {
-    unsubscribeAuthorization = listenToAuthChanges();
-    console.log(`App component init authorized: ${authorized}, checkingForAuthorization: ${checkingForAuthorization}`);
-    if (!checkingForAuthorization) {
-      redirectIfUnauthorized(authorized);
-    }
+    setAuthorizationListener(listenToAuthChanges);
+    redirectToLoginIfNeeded(checkingForAuthorization, authorized);
 
     return () => {
-      console.log(`App component remove`);
       unsubscribeAuthorization();
     };
   }, []);
 
   const renderComponent = checkingForAuthorization ? (
-    <p>Loading...</p>
+    <Loading />
   ) : (
-    <Router>
-      <Home path={paths.HOME} />
-      <Login path={paths.LOGIN} />
-      <NotFound default />
-    </Router>
+    <div>
+      <Router>
+        <Home path={paths.HOME} />
+        <Login path={paths.LOGIN} />
+        <NotFound default />
+      </Router>
+    </div>
   );
 
   return renderComponent;

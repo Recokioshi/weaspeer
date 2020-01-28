@@ -1,25 +1,24 @@
 import C from './AppConstants';
 import { AppState, AppAction } from '../AppTypes';
 
-const initialState: AppState = {
+export const appInitialState: AppState = {
   loggedIn: false,
-  checkingUser: false
+  checkingUser: true
 };
 
-export default (state: AppState = initialState, action: AppAction): AppState => {
-  console.log(action.type)
+export default (state: AppState = appInitialState, action: AppAction): AppState => {
   switch (action.type) {
-    case C.USER_CHECK:
+    case C.APP_USER_CHECK:
       return {
         loggedIn: false,
         checkingUser: true
       };
-    case C.LOGGED_IN:
+    case C.APP_LOGGED_IN:
       return {
         loggedIn: true,
         checkingUser: false
       };
-    case C.LOGGED_OUT:
+    case C.APP_LOGGED_OUT:
       return {
         loggedIn: false,
         checkingUser: false

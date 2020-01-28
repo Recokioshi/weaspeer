@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { RouteComponentProps } from '@reach/router';
 
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
@@ -15,9 +14,16 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase';
 
 import logo from '../../assets/Weaspeer-logo.png';
+import { LoginProps } from './LoginTypes';
+import { redirectToHomeIfNeeded } from './duck/LoginOperations';
 
-const Login: React.FC<RouteComponentProps> = () => {
+const Login: React.FC<LoginProps> = ({ authorized }) => {
   const styles = uiStyles();
+
+  useEffect(() => {
+    redirectToHomeIfNeeded(authorized);
+  });
+
   return (
     <Grid
       container

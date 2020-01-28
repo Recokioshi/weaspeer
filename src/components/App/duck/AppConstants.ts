@@ -1,9 +1,9 @@
 import { AppActionTypesConstant } from '../AppTypes';
 
 const appConstants: AppActionTypesConstant = {
-  LOGGED_IN: 'LOGGED_IN',
-  LOGGED_OUT: 'LOGGED_OUT',
-  USER_CHECK: 'USER_CHECK'
+  APP_LOGGED_IN: 'APP_LOGGED_IN',
+  APP_LOGGED_OUT: 'APP_LOGGED_OUT',
+  APP_USER_CHECK: 'APP_USER_CHECK'
 };
 
 export default appConstants;

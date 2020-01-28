@@ -1,16 +1,28 @@
-export type AppActionType = 'LOGGED_IN' | 'LOGGED_OUT' | 'USER_CHECK';
+import { Action } from 'redux';
+
+export type AppActionType = 'APP_LOGGED_IN' | 'APP_LOGGED_OUT' | 'APP_USER_CHECK';
 
 export type AppActionTypesConstant = {
   [key in AppActionType]: AppActionType;
 };
 
+export interface UserCheckingAction extends Action {
+  type: 'APP_USER_CHECK';
+}
+
+export interface UserLoggedInAction extends Action {
+  type: 'APP_LOGGED_IN';
+}
+
+export interface UserLoggedOutAction extends Action {
+  type: 'APP_LOGGED_OUT';
+}
+
+export type AppAction = UserCheckingAction | UserLoggedInAction | UserLoggedOutAction;
+
 export type AppState = {
   loggedIn: boolean;
   checkingUser: boolean;
-};
-
-export type AppAction = {
-  type: AppActionType;
 };
 
 type AppStateProps = {

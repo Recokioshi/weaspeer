@@ -1,9 +1,9 @@
 import App from './AppComponent';
 import { connect } from 'react-redux';
-import { State } from '../../common/Redux/types';
-import { listenToAuthChanges, checkIfUserIsCurrentlyLoggedIn } from './duck/AppOperations';
+import { ApplicationState } from '../../common/Redux/types';
+import { listenToAuthChanges } from './duck/AppOperations';
 
-const mapStateToProps = (state: State) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   checkingForAuthorization: state.App.checkingUser,
   authorized: state.App.loggedIn
 });
@@ -11,9 +11,6 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = (dispatch: any) => ({
   listenToAuthChanges: (): firebase.Unsubscribe => {
     return dispatch(listenToAuthChanges());
-  },
-  checkIfUserIsCurrentlyLoggedIn: () => {
-    dispatch(checkIfUserIsCurrentlyLoggedIn());
   }
 });
 

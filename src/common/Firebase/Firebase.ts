@@ -13,7 +13,6 @@ var firebaseConfig = {
 // Initialize Firebase
 
 let app: firebase.app.App;
-console.log('before app init');
 if (!firebase.apps.length) {
   app = firebase.initializeApp(firebaseConfig);
   firebase.analytics();

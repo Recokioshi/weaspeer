@@ -1,5 +1,7 @@
-import { AppState } from '../../components/App/AppTypes';
+import { AppState, AppAction } from '../../components/App/AppTypes';
 
-export type State = {
+export type ApplicationAction = AppAction;
+
+export type ApplicationState = {
   App: AppState;
 };
