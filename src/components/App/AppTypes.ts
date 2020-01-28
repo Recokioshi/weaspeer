@@ -12,6 +12,7 @@ export interface UserCheckingAction extends Action {
 
 export interface UserLoggedInAction extends Action {
   type: 'APP_LOGGED_IN';
+  uid: string;
 }
 
 export interface UserLoggedOutAction extends Action {
@@ -23,6 +24,7 @@ export type AppAction = UserCheckingAction | UserLoggedInAction | UserLoggedOutA
 export type AppState = {
   loggedIn: boolean;
   checkingUser: boolean;
+  uid: string;
 };
 
 type AppStateProps = {

@@ -12,8 +12,8 @@ export const redirectToLoginIfNeeded = (checkingForAuthorization: boolean, autho
 };
 
 const handleLogIn = (dispatch: Dispatch<AppAction>) => {
-  return () => {
-    dispatch(userLoggedIn());
+  return (uid: string) => {
+    dispatch(userLoggedIn(uid));
   };
 };
 
