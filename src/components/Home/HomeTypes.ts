@@ -11,7 +11,7 @@ export type AppActionTypesConstant = {
   HOME_USER_DATA_LOADED: HomeUserDataLoadedActionType;
 };
 
-interface IUserInfo {
+export interface IUserInfo {
   creationDate: Date;
   firstName: String;
   lastName: String;
