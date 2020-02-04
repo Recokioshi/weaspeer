@@ -1,5 +1,5 @@
 import C from './AppConstants';
-import { AppState, AppAction, UserLoggedInAction } from '../AppTypes';
+import { AppState, AppAction, AppUserLoggedInAction } from '../AppTypes';
 
 export const appInitialState: AppState = {
   loggedIn: false,
@@ -17,7 +17,7 @@ export default (state: AppState = appInitialState, action: AppAction): AppState 
       return {
         loggedIn: true,
         checkingUser: false,
-        uid: (action as UserLoggedInAction).uid,
+        uid: (action as AppUserLoggedInAction).uid,
       };
     case C.APP_LOGGED_OUT:
       return {

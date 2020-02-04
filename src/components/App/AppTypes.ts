@@ -1,25 +1,30 @@
 import { Action } from 'redux';
 
-export type AppActionType = 'APP_LOGGED_IN' | 'APP_LOGGED_OUT' | 'APP_USER_CHECK';
+export type AppLoggedInActionType = 'APP_LOGGED_IN';
+export type AppLoggedOutActionType = 'APP_LOGGED_OUT';
+export type AppCheckUserActionType = 'APP_USER_CHECK';
+export type AppActionType = AppLoggedInActionType | AppLoggedOutActionType | AppCheckUserActionType;
 
 export type AppActionTypesConstant = {
-  [key in AppActionType]: AppActionType;
+  APP_LOGGED_IN: AppLoggedInActionType;
+  APP_LOGGED_OUT: AppLoggedOutActionType;
+  APP_USER_CHECK: AppCheckUserActionType;
 };
 
 export interface UserCheckingAction extends Action {
-  type: 'APP_USER_CHECK';
+  type: AppCheckUserActionType;
 }
 
-export interface UserLoggedInAction extends Action {
-  type: 'APP_LOGGED_IN';
+export interface AppUserLoggedInAction extends Action {
+  type: AppLoggedInActionType;
   uid: string;
 }
 
-export interface UserLoggedOutAction extends Action {
-  type: 'APP_LOGGED_OUT';
+export interface AppUserLoggedOutAction extends Action {
+  type: AppLoggedOutActionType;
 }
 
-export type AppAction = UserCheckingAction | UserLoggedInAction | UserLoggedOutAction;
+export type AppAction = UserCheckingAction | AppUserLoggedInAction | AppUserLoggedOutAction;
 
 export type AppState = {
   loggedIn: boolean;

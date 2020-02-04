@@ -1,11 +1,7 @@
-import React, { useEffect } from 'react';
-import { RouteComponentProps, navigate } from '@reach/router';
+import React from 'react';
+import { RouteComponentProps } from '@reach/router';
 
 const NotFound: React.FC<RouteComponentProps> = () => {
-  useEffect(() => {
-    navigate(`/`);
-  });
-
   return (
     <div className="App">
       <header className="App-header">

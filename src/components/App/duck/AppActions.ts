@@ -1,16 +1,16 @@
-import C from './AppConstants';
 import { ActionCreator } from 'redux';
-import { UserCheckingAction, UserLoggedInAction, UserLoggedOutAction } from '../AppTypes';
+import { UserCheckingAction, AppUserLoggedInAction, AppUserLoggedOutAction } from '../AppTypes';
+import C from './AppConstants';
 
 export const userChecking: ActionCreator<UserCheckingAction> = () => ({
-  type: 'APP_USER_CHECK',
+  type: C.APP_USER_CHECK,
 });
 
-export const userLoggedIn: ActionCreator<UserLoggedInAction> = (uid: string) => ({
-  type: 'APP_LOGGED_IN',
+export const userLoggedIn: ActionCreator<AppUserLoggedInAction> = (uid: string) => ({
+  type: C.APP_LOGGED_IN,
   uid,
 });
 
-export const userLoggedOut: ActionCreator<UserLoggedOutAction> = () => ({
-  type: 'APP_LOGGED_OUT',
+export const userLoggedOut: ActionCreator<AppUserLoggedOutAction> = () => ({
+  type: C.APP_LOGGED_OUT,
 });

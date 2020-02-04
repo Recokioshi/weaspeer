@@ -17,13 +17,11 @@ export const authStateChangeListener = (
     }
   });
 
-export const loadUserData = (uid: string, handleUserDataLoaded: Function) => {
+export const loadUserData = async (uid: string) => {
   const db = firebaseApp.firestore();
-  db.collection(COLLECTIONS.USERS)
+  const userInfo: firebase.firestore.DocumentSnapshot | void = await db
+    .collection(COLLECTIONS.USERS)
     .doc(uid)
-    .get()
-    .then((userInfo: firebase.firestore.DocumentSnapshot) => {
-      const userData = userInfo.exists ? userInfo.data() : {};
-      handleUserDataLoaded(userData);
-    });
+    .get();
+  return userInfo.exists ? userInfo.data() : null;
 };
