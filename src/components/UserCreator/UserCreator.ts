@@ -8,9 +8,13 @@ import {
 } from './UserCreatorTypes';
 import { validateNewUserData, saveNewUserData } from './duck/UserCreatorOperations';
 
-const mapStateToProps = (state: ApplicationState, ownProps: any): UserCreatorStateProps => ({
+const mapStateToProps = (
+  state: ApplicationState,
+  ownProps: UserCreatorOwnProps
+): UserCreatorStateProps => ({
   userInfo: state.Home.userData.userInfo,
   validateNewUserData,
+  ...ownProps,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

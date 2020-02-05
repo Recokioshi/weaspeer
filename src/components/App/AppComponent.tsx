@@ -34,7 +34,7 @@ const App: React.FC<AppProps> = ({ authorized, checkingForAuthorization, listenT
       <Router>
         <Home path={paths.HOME} />
         <Login path={paths.LOGIN} />
-        <UserCreator path={paths.USER_CREATOR} />
+        <UserCreator path={paths.USER_CREATOR} isPasswordMandatory={true} />
         <NotFound default />
       </Router>
     </div>
