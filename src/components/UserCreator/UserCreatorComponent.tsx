@@ -13,6 +13,7 @@ import { UserCreatorProps } from './UserCreatorTypes';
 import { makeStyles } from '@material-ui/core/styles';
 import { UserCreatorInputs, UserInfoValidationResults } from './duck/UserCreatorOperations';
 import Alert from '../Alert/AlertComponent';
+import { UserData } from '../App/UserData';
 
 const useStyles = makeStyles(theme => ({
     background: {
@@ -40,6 +41,7 @@ const UserCreator: React.FC<UserCreatorProps> = ({
     saveNewUserData,
     validateNewUserData,
     isPasswordMandatory,
+    uid,
 }) => {
     const styles = useStyles();
     const { firstName, lastName, username } = userInfo;
@@ -61,7 +63,7 @@ const UserCreator: React.FC<UserCreatorProps> = ({
         };
         const validationResults = validateNewUserData(userInputs, isPasswordMandatory);
         if (validationResults.length === 0) {
-            saveNewUserData(userInputs);
+            saveNewUserData(new UserData(newFirstName, newLastName, newUsername), uid);
         } else {
             setValidationMessages(validationResults);
         }

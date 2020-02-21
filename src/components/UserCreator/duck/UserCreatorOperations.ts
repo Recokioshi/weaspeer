@@ -1,3 +1,6 @@
+import { setNewUserData } from '../../../common/Model/model';
+import { IUSerData } from '../../App/UserData';
+
 export type UserCreatorInputs = {
     newFirstName: String;
     newLastName: String;
@@ -30,6 +33,6 @@ export const validateNewUserData = (
     return validationMessages;
 };
 
-export const saveNewUserData = () => {
-    console.log('user data save');
+export const saveNewUserData = (userData: IUSerData, uid: string) => {
+    setNewUserData(uid, userData);
 };

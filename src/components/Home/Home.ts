@@ -2,18 +2,15 @@ import Home from './HomeComponent';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../../common/Redux/types';
 import { RouteComponentProps } from '@reach/router';
-import { getUserData, redirectUserCreationIfNeeded } from './duck/HomeOperations';
+import { redirectUserCreationIfNeeded } from './duck/HomeOperations';
 
 const mapStateToProps = (state: ApplicationState, ownProps: RouteComponentProps) => ({
-  uid: state.App.uid,
-  userData: state.Home.userData,
-  redirectUserCreationIfNeeded,
+    uid: state.App.uid,
+    userData: state.App.userData,
+    checkingUser: state.App.checkingUser,
+    redirectUserCreationIfNeeded,
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
-  getUserData: (uid: string) => {
-    dispatch(getUserData(dispatch, uid));
-  },
-});
+const mapDispatchToProps = (dispatch: any) => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

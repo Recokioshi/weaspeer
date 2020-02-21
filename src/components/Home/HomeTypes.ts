@@ -1,54 +1,33 @@
 import { RouteComponentProps } from '@reach/router';
 import { Action } from 'redux';
+import { IUSerData } from '../App/UserData';
 
 export type HomeRoomSelectedActionType = 'HOME_ROOM_SELECTED';
-export type HomeUserDataLoadedActionType = 'HOME_USER_DATA_LOADED';
 
-export type HomeActionType = HomeRoomSelectedActionType | HomeUserDataLoadedActionType;
+export type HomeActionType = HomeRoomSelectedActionType;
 
 export type AppActionTypesConstant = {
-  HOME_ROOM_SELECTED: HomeRoomSelectedActionType;
-  HOME_USER_DATA_LOADED: HomeUserDataLoadedActionType;
+    HOME_ROOM_SELECTED: HomeRoomSelectedActionType;
 };
 
-export interface IUserInfo {
-  creationDate: Date;
-  firstName: String;
-  lastName: String;
-  username: String;
-}
-
-export interface IUSerData {
-  chatList: String[];
-  rsaKey: String;
-  userInfo: IUserInfo;
-}
-
-export interface HomeUserDataLoadedAction extends Action {
-  type: HomeUserDataLoadedActionType;
-  userData: IUSerData;
-}
-
 export interface HomeRoomSelectedAction extends Action {
-  type: HomeRoomSelectedActionType;
-  selectedRoomName: String;
+    type: HomeRoomSelectedActionType;
+    selectedRoomName: String;
 }
 
-export type HomeAction = HomeUserDataLoadedAction | HomeRoomSelectedAction;
+export type HomeAction = HomeRoomSelectedAction;
 
 export type HomeState = {
-  userData: IUSerData;
-  selectedRoomName: String;
+    selectedRoomName: String;
 };
 
 type HomeStateProps = {
-  uid: string;
-  userData: IUSerData;
-  redirectUserCreationIfNeeded: (userData: IUSerData) => void;
+    uid: string;
+    checkingUser: Boolean;
+    userData: IUSerData;
+    redirectUserCreationIfNeeded: (userData: IUSerData, checkingUser: Boolean) => void;
 };
 
-type HomeDispatchProps = {
-  getUserData: Function;
-};
+type HomeDispatchProps = {};
 
 export type HomeProps = HomeStateProps & HomeDispatchProps & RouteComponentProps;

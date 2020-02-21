@@ -1,15 +1,15 @@
 import { RouteComponentProps } from '@reach/router';
-import { IUserInfo } from '../Home/HomeTypes';
 import { UserInfoValidationResults, UserCreatorInputs } from './duck/UserCreatorOperations';
+import { IUserInfo, IUSerData } from '../App/UserData';
 
 export type UserCreatorStateProps = {
     userInfo: IUserInfo;
+    uid: string;
     validateNewUserData: (userInputs: UserCreatorInputs, isPasswordMandatory: Boolean) => UserInfoValidationResults;
+    saveNewUserData: (userInfo: IUSerData, uid: string) => void;
 };
 
-export type UserCreatorDispatchProps = {
-    saveNewUserData: Function;
-};
+export type UserCreatorDispatchProps = {};
 
 export type UserCreatorOwnProps = {
     isPasswordMandatory: Boolean;
