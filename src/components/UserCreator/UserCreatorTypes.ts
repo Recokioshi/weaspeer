@@ -3,19 +3,17 @@ import { UserInfoValidationResults, UserCreatorInputs } from './duck/UserCreator
 import { IUserInfo, IUSerData } from '../App/UserData';
 
 export type UserCreatorStateProps = {
-    userInfo: IUserInfo;
-    uid: string;
-    validateNewUserData: (userInputs: UserCreatorInputs, isPasswordMandatory: Boolean) => UserInfoValidationResults;
-    saveNewUserData: (userInfo: IUSerData, uid: string) => void;
+  userInfo: IUserInfo;
+  uid: string;
+  validateNewUserData: (userInputs: UserCreatorInputs) => UserInfoValidationResults;
+  saveNewUserData: (userInfo: IUSerData, uid: string) => void;
 };
 
 export type UserCreatorDispatchProps = {};
 
-export type UserCreatorOwnProps = {
-    isPasswordMandatory: Boolean;
-};
+export type UserCreatorOwnProps = {};
 
 export type UserCreatorProps = UserCreatorStateProps &
-    UserCreatorDispatchProps &
-    UserCreatorOwnProps &
-    RouteComponentProps;
+  UserCreatorDispatchProps &
+  UserCreatorOwnProps &
+  RouteComponentProps;
