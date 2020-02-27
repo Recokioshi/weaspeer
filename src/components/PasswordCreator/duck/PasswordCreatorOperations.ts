@@ -22,10 +22,8 @@ export const validateNewPassword = (userInputs: PasswordCreatorInputs): Password
 export const saveNewPassword = (uid: String) => (password: String) => {
   const rsaCreator = new RsaCreator();
   const encryptedPass = rsaCreator.encryptWithPassphrase(password as string);
-  console.log(`save new key encrypted: ${encryptedPass} to user ${uid}`);
 };
 
 export const restorePasswordFromDb = (rsaKey: String, uid: String) => (password: String) => {
   const decryptedKey = new RsaCreator(rsaKey as string, password as string);
-  console.log(`decrypted: ${decryptedKey.getPublicKey()}`);
 };

@@ -30,13 +30,24 @@ const setUserDataListener = (listenToUserData: Function, uid: string) => {
 const App: React.FC<AppProps> = ({
   authorized,
   checkingForAuthorization,
+  allDataLoaded,
   listenToAuthChanges,
   listenToUserData,
+  loadPrivateKeyFromStorage,
   uid,
+  shouldLoadPrivateKey,
 }) => {
   useEffect(() => {
-    setAuthChangesListener(listenToAuthChanges);
-    setUserDataListener(listenToUserData, uid);
+    if (!unsubscribeAuthorization) {
+      setAuthChangesListener(listenToAuthChanges);
+    }
+    if (!unsubscribeUserData && uid) {
+      setUserDataListener(listenToUserData, uid);
+    }
+    if (shouldLoadPrivateKey) {
+      loadPrivateKeyFromStorage(uid);
+    }
+
     redirectToLoginIfNeeded(checkingForAuthorization, authorized);
 
     return () => {
@@ -44,8 +55,8 @@ const App: React.FC<AppProps> = ({
       unsubscribeUserData && unsubscribeUserData();
     };
   }, [authorized]);
-
-  const renderComponent = checkingForAuthorization ? (
+  console.log(`allDataLoaded ${allDataLoaded}`);
+  const renderComponent = !allDataLoaded ? (
     <Loading />
   ) : (
     <div>

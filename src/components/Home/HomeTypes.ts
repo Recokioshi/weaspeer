@@ -23,10 +23,10 @@ export type HomeState = {
 
 type HomeStateProps = {
   uid: string;
-  checkingUser: Boolean;
   userData: IUSerData;
-  redirectUserCreationIfNeeded: (userData: IUSerData, checkingUser: Boolean) => void;
-  redirectPasswordCreationIfNeeded: (userData: IUSerData, checkingUser: Boolean) => void;
+  privateKey: string;
+  redirectUserCreationIfNeeded: (userData: IUSerData) => void;
+  redirectPasswordCreationIfNeeded: (privateKey: string, userData: IUSerData) => void;
 };
 
 type HomeDispatchProps = {};

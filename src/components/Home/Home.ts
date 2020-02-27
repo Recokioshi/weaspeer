@@ -7,7 +7,7 @@ import { redirectUserCreationIfNeeded, redirectPasswordCreationIfNeeded } from '
 const mapStateToProps = (state: ApplicationState, ownProps: RouteComponentProps) => ({
   uid: state.App.uid,
   userData: state.App.userData,
-  checkingUser: state.App.checkingUser,
+  privateKey: state.App.privateKey,
   redirectUserCreationIfNeeded,
   redirectPasswordCreationIfNeeded,
 });

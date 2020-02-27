@@ -2,14 +2,15 @@ import { navigate } from '@reach/router';
 import { paths } from '../../../common/Router/constants';
 import { IUSerData } from '../../App/UserData';
 
-export const redirectUserCreationIfNeeded = (userData: IUSerData, checkingUser: Boolean) => {
-  if (!checkingUser && !isUserDataComplete(userData)) {
+export const redirectUserCreationIfNeeded = (userData: IUSerData) => {
+  if (!isUserDataComplete(userData)) {
     navigate(paths.USER_CREATOR);
   }
 };
 
-export const redirectPasswordCreationIfNeeded = (userData: IUSerData, checkingUser: Boolean) => {
-  if (!checkingUser && !isPasswordComplete(userData)) {
+export const redirectPasswordCreationIfNeeded = (privateKey: string, userData: IUSerData) => {
+  console.log(`private key ${privateKey}`);
+  if (!privateKey && !isPasswordComplete(userData)) {
     navigate(paths.PASSWORD_CREATOR);
   }
 };
