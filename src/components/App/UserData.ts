@@ -6,7 +6,7 @@ export interface IUserInfo {
 }
 
 export interface IUSerData {
-  chatList: String[];
+  chatList: string[];
   rsaKey: String;
   userInfo: IUserInfo;
 }
@@ -25,11 +25,17 @@ export class UserInfo implements IUserInfo {
 }
 
 export class UserData implements IUSerData {
-  chatList: never[];
+  chatList: string[];
   rsaKey: String;
   userInfo: UserInfo;
-  constructor(firstName: String = '', lastName: String = '', username: String = '', rsaKey: String = '') {
-    this.chatList = [];
+  constructor(
+    firstName: String = '',
+    lastName: String = '',
+    username: String = '',
+    rsaKey: String = '',
+    chatList: string[] = [],
+  ) {
+    this.chatList = chatList;
     this.rsaKey = rsaKey;
     this.userInfo = new UserInfo(firstName, lastName, username);
   }

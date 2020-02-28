@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { HomeProps } from './HomeTypes';
+import ChatList from '../ChatList/ChatList';
 
 const Home: React.FC<HomeProps> = ({
   uid,
@@ -15,9 +16,7 @@ const Home: React.FC<HomeProps> = ({
   });
   return (
     <div className="App">
-      <header className="App-header">
-        <p>Welcome {uid}</p>
-      </header>
+      <ChatList />
     </div>
   );
 };

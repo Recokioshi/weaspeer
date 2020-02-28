@@ -4,4 +4,5 @@ export interface IModelUserNode {
   lastName: String;
   username: String;
   rsaKey: String;
+  chatList: string[];
 }

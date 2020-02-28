@@ -17,8 +17,15 @@ export const authStateChangeListener = (onLogin: Function, onLogout: Function): 
   });
 
 export const userDataListener = (uid: string, onUserDataLoaded: Function) => {
-  const convertDbNodeToUserData = ({ creationDate, firstName, lastName, username, rsaKey }: IModelUserNode) => {
-    const userData = new UserData(firstName, lastName, username, rsaKey);
+  const convertDbNodeToUserData = ({
+    creationDate,
+    firstName,
+    lastName,
+    username,
+    rsaKey,
+    chatList,
+  }: IModelUserNode) => {
+    const userData = new UserData(firstName, lastName, username, rsaKey, chatList);
     userData.userInfo.creationDate = creationDate;
     return userData;
   };
@@ -38,9 +45,9 @@ export const userDataListener = (uid: string, onUserDataLoaded: Function) => {
 
 export const setNewUserData = (uid: string, userData: IUSerData) => {
   const db = firebaseApp.firestore();
-  const { userInfo, rsaKey } = userData;
+  const { userInfo, rsaKey, chatList } = userData;
   const { creationDate, firstName, lastName, username } = userInfo;
   db.collection(COLLECTIONS.USERS)
     .doc(uid)
-    .set({ creationDate, firstName, lastName, username, rsaKey });
+    .set({ creationDate, firstName, lastName, username, rsaKey, chatList });
 };
