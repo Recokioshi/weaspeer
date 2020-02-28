@@ -7,7 +7,7 @@ import {
   AppPrivateKeyLoadedAction,
 } from '../AppTypes';
 
-const initialUserData = {
+export const initialUserData = {
   chatList: [],
   rsaKey: '',
   userInfo: {

@@ -8,14 +8,15 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import { backgroundColorDark } from '../../common/Styles/material-uiStyles';
-import { UserCreatorProps } from './UserCreatorTypes';
+import { backgroundColorDark } from '../../../common/Styles/material-uiStyles';
 import { makeStyles } from '@material-ui/core/styles';
-import { UserCreatorInputs, UserInfoValidationResults } from './duck/UserCreatorOperations';
-import Alert from '../Alert/AlertComponent';
-import { UserData } from '../App/UserData';
-import { navigate } from '@reach/router';
-import { paths } from '../../common/Router/constants';
+import { PasswordCreatorEditProps } from '../PasswordCreatorTypes';
+import {
+  validateNewPassword,
+  PasswordValidationResults,
+  PasswordCreatorInputs,
+} from '../duck/PasswordCreatorOperations';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles(theme => ({
   background: {
@@ -38,25 +39,26 @@ const onChangeSetValue = (setValueFunction: (newVal: string) => void) => (event:
   setValueFunction(event.target.value);
 };
 
-const UserCreator: React.FC<UserCreatorProps> = ({ userInfo, saveNewUserData, validateNewUserData, uid }) => {
+const NewPasswordCreator: React.FC<PasswordCreatorEditProps> = ({ handlePasswordSubmit }) => {
   const styles = useStyles();
-  const { firstName, lastName, username } = userInfo;
-  const [newFirstName, setNewFirstName] = useState(firstName);
-  const [newLastName, setNewLastName] = useState(lastName);
-  const [newUsername, setNewUsername] = useState(username);
-  const [validationMessages, setValidationMessages] = useState<UserInfoValidationResults>([]);
+  const [newPassword, setNewPassword] = useState('');
+  const [newPasswordRepeat, setNewPasswordRepeat] = useState('');
+  const [validationMessages, setValidationMessages] = useState<PasswordValidationResults>([]);
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    setValidationMessages([]);
     event.preventDefault();
-    const userInputs: UserCreatorInputs = {
-      newFirstName,
-      newLastName,
-      newUsername,
+    const userInputs: PasswordCreatorInputs = {
+      newPassword,
+      newPasswordRepeat,
     };
-    const validationResults = validateNewUserData(userInputs);
+    const validationResults = validateNewPassword(userInputs);
     if (validationResults.length === 0) {
-      saveNewUserData(new UserData(newFirstName, newLastName, newUsername), uid);
-      navigate(paths.HOME);
+      try {
+        handlePasswordSubmit(newPassword);
+      } catch (err) {
+        setValidationMessages([...validationResults, err.message]);
+      }
     } else {
       setValidationMessages(validationResults);
     }
@@ -68,27 +70,22 @@ const UserCreator: React.FC<UserCreatorProps> = ({ userInfo, saveNewUserData, va
       <Paper className={styles.createUserForm}>
         <form onSubmit={onSubmit}>
           <Box display="flex" flexDirection="column" alignItems="center">
-            <Typography>User Info</Typography>
+            <Typography>Set password</Typography>
             <TextField
-              id="new-first-name"
-              label="First name"
-              onChange={onChangeSetValue(setNewFirstName)}
-              value={newFirstName}
+              id="new-password"
+              label="Password"
+              onChange={onChangeSetValue(setNewPassword)}
+              value={newPassword}
               margin="normal"
+              type="password"
             />
             <TextField
-              id="new-last-name"
-              label="Last name"
-              onChange={onChangeSetValue(setNewLastName)}
-              value={newLastName}
+              id="new-password-repeat"
+              label="Repeat password"
+              onChange={onChangeSetValue(setNewPasswordRepeat)}
+              value={newPasswordRepeat}
               margin="normal"
-            />
-            <TextField
-              id="new-username"
-              label="Username"
-              onChange={onChangeSetValue(setNewUsername)}
-              value={newUsername}
-              margin="normal"
+              type="password"
             />
             {validationMessages.length > 0 &&
               validationMessages.map((message: String) => (
@@ -106,4 +103,4 @@ const UserCreator: React.FC<UserCreatorProps> = ({ userInfo, saveNewUserData, va
   );
 };
 
-export default UserCreator;
+export default NewPasswordCreator;

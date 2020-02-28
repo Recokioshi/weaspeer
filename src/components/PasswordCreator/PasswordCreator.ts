@@ -2,18 +2,17 @@ import PasswordCreator from './PasswordCreatorComponent';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../../common/Redux/types';
 import {
-  PasswordCreatorStateProps,
-  PasswordCreatorDispatchProps,
-  PasswordCreatorOwnProps,
+  PasswordCreatorRootComponentStateProps,
+  PasswordCreatorRootComponentDispatchProps,
+  PasswordCreatorRootComponentOwnProps,
 } from './PasswordCreatorTypes';
-import { validateNewPassword, restorePasswordFromDb, saveNewPassword } from './duck/PasswordCreatorOperations';
 
-const mapStateToProps = (state: ApplicationState, ownProps: PasswordCreatorOwnProps): PasswordCreatorStateProps => {
-  const rsaKey = state.App.userData.rsaKey;
-  const uid = state.App.uid;
+const mapStateToProps = (
+  state: ApplicationState,
+  ownProps: PasswordCreatorRootComponentOwnProps,
+): PasswordCreatorRootComponentStateProps => {
   return {
-    handlePasswordSubmit: rsaKey ? restorePasswordFromDb(rsaKey, uid) : saveNewPassword(uid),
-    validateNewPassword,
+    shouldCreateNewPassword: !state.App.userData.rsaKey,
     ...ownProps,
   };
 };
@@ -21,9 +20,9 @@ const mapStateToProps = (state: ApplicationState, ownProps: PasswordCreatorOwnPr
 const mapDispatchToProps = (dispatch: any) => ({});
 
 export default connect<
-  PasswordCreatorStateProps,
-  PasswordCreatorDispatchProps,
-  PasswordCreatorOwnProps,
+  PasswordCreatorRootComponentStateProps,
+  PasswordCreatorRootComponentDispatchProps,
+  PasswordCreatorRootComponentOwnProps,
   ApplicationState
 >(
   mapStateToProps,

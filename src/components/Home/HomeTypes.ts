@@ -25,7 +25,7 @@ type HomeStateProps = {
   uid: string;
   userData: IUSerData;
   privateKey: string;
-  redirectUserCreationIfNeeded: (userData: IUSerData) => void;
+  redirectUserCreationIfNeeded: (userData: IUSerData) => boolean;
   redirectPasswordCreationIfNeeded: (privateKey: string, userData: IUSerData) => void;
 };
 

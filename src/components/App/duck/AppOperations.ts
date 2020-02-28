@@ -13,6 +13,7 @@ import {
   keyChecking,
 } from './AppActions';
 import { IUSerData } from '../UserData';
+import { initialUserData } from './AppReducer';
 
 export const redirectToLoginIfNeeded = (checkingForAuthorization: boolean, authorized: boolean) => {
   if (!checkingForAuthorization && !authorized) {
@@ -32,8 +33,8 @@ const handleLogOut = (dispatch: Dispatch<AppAction>) => {
   };
 };
 
-const handleUserDataLoaded = (dispatch: Dispatch<AppAction>) => (userData: IUSerData) => {
-  dispatch(userDataLoaded(userData));
+const handleUserDataLoaded = (dispatch: Dispatch<AppAction>) => (userData: IUSerData | null) => {
+  dispatch(userDataLoaded(userData || initialUserData));
 };
 
 export const listenToAuthChanges = () => {

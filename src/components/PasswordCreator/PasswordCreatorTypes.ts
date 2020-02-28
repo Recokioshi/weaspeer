@@ -1,16 +1,28 @@
 import { RouteComponentProps } from '@reach/router';
 import { PasswordCreatorInputs, PasswordValidationResults } from './duck/PasswordCreatorOperations';
 
-export type PasswordCreatorStateProps = {
+export type PasswordCreatorEditStateProps = {
   handlePasswordSubmit: (password: String) => void;
   validateNewPassword: (userInputs: PasswordCreatorInputs) => PasswordValidationResults;
 };
 
-export type PasswordCreatorDispatchProps = {};
+export type PasswordCreatorEditDispatchProps = {};
 
-export type PasswordCreatorOwnProps = {};
+export type PasswordCreatorEditOwnProps = {};
 
-export type PasswordCreatorProps = PasswordCreatorStateProps &
-  PasswordCreatorDispatchProps &
-  PasswordCreatorOwnProps &
+export type PasswordCreatorEditProps = PasswordCreatorEditStateProps &
+  PasswordCreatorEditDispatchProps &
+  PasswordCreatorEditOwnProps;
+
+export type PasswordCreatorRootComponentStateProps = {
+  shouldCreateNewPassword: boolean;
+};
+
+export type PasswordCreatorRootComponentDispatchProps = {};
+
+export type PasswordCreatorRootComponentOwnProps = {};
+
+export type PasswordCreatorRootComponentProps = PasswordCreatorRootComponentStateProps &
+  PasswordCreatorRootComponentDispatchProps &
+  PasswordCreatorRootComponentOwnProps &
   RouteComponentProps;

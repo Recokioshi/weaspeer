@@ -55,7 +55,6 @@ const App: React.FC<AppProps> = ({
       unsubscribeUserData && unsubscribeUserData();
     };
   }, [authorized]);
-  console.log(`allDataLoaded ${allDataLoaded}`);
   const renderComponent = !allDataLoaded ? (
     <Loading />
   ) : (

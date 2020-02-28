@@ -1,4 +1,5 @@
 import { RsaCreator } from '../../../common/Encryption/RsaCreator';
+import { IUSerData } from '../../App/UserData';
 
 export type PasswordCreatorInputs = {
   newPassword: String;
@@ -19,11 +20,13 @@ export const validateNewPassword = (userInputs: PasswordCreatorInputs): Password
   return validationMessages;
 };
 
-export const saveNewPassword = (uid: String) => (password: String) => {
+export const saveNewPassword = (uid: String, userData: IUSerData) => (password: String) => {
   const rsaCreator = new RsaCreator();
   const encryptedPass = rsaCreator.encryptWithPassphrase(password as string);
+  console.log('saveNewPassword clicked');
 };
 
-export const restorePasswordFromDb = (rsaKey: String, uid: String) => (password: String) => {
+export const restorePasswordFromDb = (uid: String, userData: IUSerData) => (password: String) => {
+  const { rsaKey } = userData;
   const decryptedKey = new RsaCreator(rsaKey as string, password as string);
 };

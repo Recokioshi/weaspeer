@@ -5,12 +5,13 @@ import { IUSerData } from '../../App/UserData';
 export const redirectUserCreationIfNeeded = (userData: IUSerData) => {
   if (!isUserDataComplete(userData)) {
     navigate(paths.USER_CREATOR);
+    return true;
   }
+  return false;
 };
 
 export const redirectPasswordCreationIfNeeded = (privateKey: string, userData: IUSerData) => {
-  console.log(`private key ${privateKey}`);
-  if (!privateKey && !isPasswordComplete(userData)) {
+  if (!(privateKey || isPasswordComplete(userData))) {
     navigate(paths.PASSWORD_CREATOR);
   }
 };

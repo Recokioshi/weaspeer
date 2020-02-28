@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { HomeProps } from './HomeTypes';
-import Loading from '../Loading/LoadingComponent';
 
 const Home: React.FC<HomeProps> = ({
   uid,
@@ -10,10 +9,10 @@ const Home: React.FC<HomeProps> = ({
   redirectPasswordCreationIfNeeded,
 }) => {
   useEffect(() => {
-    redirectUserCreationIfNeeded(userData);
-    redirectPasswordCreationIfNeeded(privateKey, userData);
+    if (!redirectUserCreationIfNeeded(userData)) {
+      redirectPasswordCreationIfNeeded(privateKey, userData);
+    }
   });
-  console.log(`hello from Home`);
   return (
     <div className="App">
       <header className="App-header">

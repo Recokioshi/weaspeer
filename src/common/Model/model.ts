@@ -20,7 +20,6 @@ export const userDataListener = (uid: string, onUserDataLoaded: Function) => {
   const convertDbNodeToUserData = ({ creationDate, firstName, lastName, username }: IModelUserNode) => {
     const userData = new UserData(firstName, lastName, username);
     userData.userInfo.creationDate = creationDate;
-    userData.rsaKey = 'temp';
     return userData;
   };
 
@@ -31,6 +30,8 @@ export const userDataListener = (uid: string, onUserDataLoaded: Function) => {
     .onSnapshot(doc => {
       if (doc.exists) {
         onUserDataLoaded(convertDbNodeToUserData(doc.data() as IModelUserNode));
+      } else {
+        onUserDataLoaded(null);
       }
     });
 };
