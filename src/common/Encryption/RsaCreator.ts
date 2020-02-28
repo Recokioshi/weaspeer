@@ -39,7 +39,7 @@ export class RsaCreator {
     return pbkdf2.pbkdf2Sync(passphrase, 'salt', 1, 128 / 8, 'sha512');
   }
 
-  encryptWithPassphrase(passphrase: string): String {
+  encryptWithPassphrase(passphrase: string): string {
     const rsaKey = this.keyDer;
     const passKey = this.getPassphraseHash(passphrase);
     // An example 128-bit key (16 bytes * 8 bits/byte = 128 bits)
@@ -57,7 +57,7 @@ export class RsaCreator {
     //  ea145b73e82aefcf2076f881c88879e4e25b1d7b24ba2788"
   }
 
-  private decryptWithPassphrase = (rsaKey: string, passphrase: string) => {
+  private decryptWithPassphrase = (rsaKey: string, passphrase: string): string => {
     const passKey = this.getPassphraseHash(passphrase);
     var encryptedBytes = aesjs.utils.hex.toBytes(rsaKey);
 

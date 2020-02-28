@@ -11,7 +11,7 @@ export const redirectUserCreationIfNeeded = (userData: IUSerData) => {
 };
 
 export const redirectPasswordCreationIfNeeded = (privateKey: string, userData: IUSerData) => {
-  if (!(privateKey || isPasswordComplete(userData))) {
+  if (!(privateKey && isPasswordComplete(userData))) {
     navigate(paths.PASSWORD_CREATOR);
   }
 };

@@ -46,6 +46,12 @@ const UserCreator: React.FC<UserCreatorProps> = ({ userInfo, saveNewUserData, va
   const [newUsername, setNewUsername] = useState(username);
   const [validationMessages, setValidationMessages] = useState<UserInfoValidationResults>([]);
 
+  const goBackHome = () => {
+    setTimeout(() => {
+      navigate(paths.HOME);
+    }, 300);
+  };
+
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const userInputs: UserCreatorInputs = {
@@ -56,7 +62,7 @@ const UserCreator: React.FC<UserCreatorProps> = ({ userInfo, saveNewUserData, va
     const validationResults = validateNewUserData(userInputs);
     if (validationResults.length === 0) {
       saveNewUserData(new UserData(newFirstName, newLastName, newUsername), uid);
-      navigate(paths.HOME);
+      goBackHome();
     } else {
       setValidationMessages(validationResults);
     }

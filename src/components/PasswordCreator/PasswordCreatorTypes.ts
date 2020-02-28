@@ -2,13 +2,15 @@ import { RouteComponentProps } from '@reach/router';
 import { PasswordCreatorInputs, PasswordValidationResults } from './duck/PasswordCreatorOperations';
 
 export type PasswordCreatorEditStateProps = {
-  handlePasswordSubmit: (password: String) => void;
+  handlePasswordSubmit: (password: string) => void;
   validateNewPassword: (userInputs: PasswordCreatorInputs) => PasswordValidationResults;
 };
 
 export type PasswordCreatorEditDispatchProps = {};
 
-export type PasswordCreatorEditOwnProps = {};
+export type PasswordCreatorEditOwnProps = {
+  passwordSavedCallback: Function;
+};
 
 export type PasswordCreatorEditProps = PasswordCreatorEditStateProps &
   PasswordCreatorEditDispatchProps &
@@ -16,6 +18,7 @@ export type PasswordCreatorEditProps = PasswordCreatorEditStateProps &
 
 export type PasswordCreatorRootComponentStateProps = {
   shouldCreateNewPassword: boolean;
+  handlePasswordEntered: Function;
 };
 
 export type PasswordCreatorRootComponentDispatchProps = {};

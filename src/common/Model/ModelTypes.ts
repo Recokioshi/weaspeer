@@ -3,4 +3,5 @@ export interface IModelUserNode {
   firstName: String;
   lastName: String;
   username: String;
+  rsaKey: String;
 }

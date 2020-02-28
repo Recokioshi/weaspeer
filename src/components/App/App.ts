@@ -6,10 +6,6 @@ import { listenToAuthChanges, listenToUserData, loadPrivateKeyFromStorage } from
 const mapStateToProps = (state: ApplicationState) => {
   const { checkingAuth, checkingUser, checkingKey, loggedIn, privateKey, userDataLoaded } = state.App;
   const dataIsLoading = checkingAuth || checkingUser || checkingKey;
-  console.log(
-    `dataIsLoading ${dataIsLoading}, loggedIn ${loggedIn}, privateKey !== '' ${privateKey !==
-      ''}, userDataLoaded ${userDataLoaded}`,
-  );
   const allDataLoaded = !dataIsLoading && loggedIn && privateKey !== '' && userDataLoaded;
   const authorized = state.App.loggedIn;
   return {

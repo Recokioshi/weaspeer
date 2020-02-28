@@ -6,6 +6,7 @@ import {
   PasswordCreatorRootComponentDispatchProps,
   PasswordCreatorRootComponentOwnProps,
 } from './PasswordCreatorTypes';
+import { redirectAfterPasswordEnter } from './duck/PasswordCreatorOperations';
 
 const mapStateToProps = (
   state: ApplicationState,
@@ -13,6 +14,7 @@ const mapStateToProps = (
 ): PasswordCreatorRootComponentStateProps => {
   return {
     shouldCreateNewPassword: !state.App.userData.rsaKey,
+    handlePasswordEntered: redirectAfterPasswordEnter,
     ...ownProps,
   };
 };

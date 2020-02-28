@@ -39,7 +39,10 @@ const onChangeSetValue = (setValueFunction: (newVal: string) => void) => (event:
   setValueFunction(event.target.value);
 };
 
-const ExistingPasswordComponent: React.FC<PasswordCreatorEditProps> = ({ handlePasswordSubmit }) => {
+const ExistingPasswordComponent: React.FC<PasswordCreatorEditProps> = ({
+  handlePasswordSubmit,
+  passwordSavedCallback,
+}) => {
   const styles = useStyles();
   const [newPassword, setNewPassword] = useState('');
   const [validationMessages, setValidationMessages] = useState<PasswordValidationResults>([]);
@@ -49,6 +52,7 @@ const ExistingPasswordComponent: React.FC<PasswordCreatorEditProps> = ({ handleP
     setValidationMessages([]);
     try {
       handlePasswordSubmit(newPassword);
+      passwordSavedCallback();
     } catch (err) {
       setValidationMessages([...validationMessages, err.message]);
     }

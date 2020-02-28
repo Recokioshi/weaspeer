@@ -1,5 +1,8 @@
 import { RsaCreator } from '../../../common/Encryption/RsaCreator';
 import { IUSerData } from '../../App/UserData';
+import { setNewUserData } from '../../../common/Model/model';
+import { navigate } from '@reach/router';
+import { paths } from '../../../common/Router/constants';
 
 export type PasswordCreatorInputs = {
   newPassword: String;
@@ -20,13 +23,29 @@ export const validateNewPassword = (userInputs: PasswordCreatorInputs): Password
   return validationMessages;
 };
 
-export const saveNewPassword = (uid: String, userData: IUSerData) => (password: String) => {
-  const rsaCreator = new RsaCreator();
-  const encryptedPass = rsaCreator.encryptWithPassphrase(password as string);
-  console.log('saveNewPassword clicked');
+const saveKeydToDb = (userData: IUSerData, uid: string) => {
+  setNewUserData(uid, userData);
 };
 
-export const restorePasswordFromDb = (uid: String, userData: IUSerData) => (password: String) => {
+const saveKeyToLocalStorage = (uid: string, rsaKey: string) => {
+  localStorage.setItem(uid, rsaKey);
+};
+
+export const saveNewPassword = (uid: string, userData: IUSerData) => (password: string) => {
+  const rsaCreator = new RsaCreator();
+  const encryptedPass = rsaCreator.encryptWithPassphrase(password);
+  saveKeydToDb({ ...userData, rsaKey: encryptedPass }, uid);
+  saveKeyToLocalStorage(uid, rsaCreator.getPrivateKey());
+};
+
+export const restorePasswordFromDb = (uid: string, userData: IUSerData) => (password: String) => {
   const { rsaKey } = userData;
   const decryptedKey = new RsaCreator(rsaKey as string, password as string);
+  saveKeyToLocalStorage(uid, decryptedKey.getPrivateKey());
+};
+
+export const redirectAfterPasswordEnter = () => {
+  setTimeout(() => {
+    navigate(paths.HOME);
+  }, 300);
 };
