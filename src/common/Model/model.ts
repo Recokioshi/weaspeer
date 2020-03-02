@@ -4,50 +4,54 @@ import { UserData, IUSerData } from '../../components/App/UserData';
 import { IModelUserNode } from './ModelTypes';
 
 export const isAuthenticated = (): boolean => {
-  return !!firebaseApp.auth().currentUser;
+    return !!firebaseApp.auth().currentUser;
 };
 
 export const authStateChangeListener = (onLogin: Function, onLogout: Function): firebase.Unsubscribe =>
-  firebaseApp.auth().onAuthStateChanged(user => {
-    if (user) {
-      onLogin(user.uid);
-    } else {
-      onLogout();
-    }
-  });
+    firebaseApp.auth().onAuthStateChanged(user => {
+        console.group(`onAuthStateChanged user: '${user}'`);
+        if (user) {
+            console.log('exists');
+            onLogin(user.uid);
+        } else {
+            console.log('exists');
+            onLogout();
+        }
+        console.groupEnd();
+    });
 
 export const userDataListener = (uid: string, onUserDataLoaded: Function) => {
-  const convertDbNodeToUserData = ({
-    creationDate,
-    firstName,
-    lastName,
-    username,
-    rsaKey,
-    chatList,
-  }: IModelUserNode) => {
-    const userData = new UserData(firstName, lastName, username, rsaKey, chatList);
-    userData.userInfo.creationDate = creationDate;
-    return userData;
-  };
+    const convertDbNodeToUserData = ({
+        creationDate,
+        firstName,
+        lastName,
+        username,
+        rsaKey,
+        chatList,
+    }: IModelUserNode) => {
+        const userData = new UserData(firstName, lastName, username, rsaKey, chatList);
+        userData.userInfo.creationDate = creationDate;
+        return userData;
+    };
 
-  const db = firebaseApp.firestore();
-  //const userInfo: firebase.firestore.DocumentSnapshot | void = await
-  db.collection(COLLECTIONS.USERS)
-    .doc(uid)
-    .onSnapshot(doc => {
-      if (doc.exists) {
-        onUserDataLoaded(convertDbNodeToUserData(doc.data() as IModelUserNode));
-      } else {
-        onUserDataLoaded(null);
-      }
-    });
+    const db = firebaseApp.firestore();
+    //const userInfo: firebase.firestore.DocumentSnapshot | void = await
+    db.collection(COLLECTIONS.USERS)
+        .doc(uid)
+        .onSnapshot(doc => {
+            if (doc.exists) {
+                onUserDataLoaded(convertDbNodeToUserData(doc.data() as IModelUserNode));
+            } else {
+                onUserDataLoaded(null);
+            }
+        });
 };
 
 export const setNewUserData = (uid: string, userData: IUSerData) => {
-  const db = firebaseApp.firestore();
-  const { userInfo, rsaKey, chatList } = userData;
-  const { creationDate, firstName, lastName, username } = userInfo;
-  db.collection(COLLECTIONS.USERS)
-    .doc(uid)
-    .set({ creationDate, firstName, lastName, username, rsaKey, chatList });
+    const db = firebaseApp.firestore();
+    const { userInfo, rsaKey, chatList } = userData;
+    const { creationDate, firstName, lastName, username } = userInfo;
+    db.collection(COLLECTIONS.USERS)
+        .doc(uid)
+        .set({ creationDate, firstName, lastName, username, rsaKey, chatList });
 };
