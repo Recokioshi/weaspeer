@@ -8,6 +8,7 @@ const Home: React.FC<HomeProps> = ({
     privateKey,
     redirectUserCreationIfNeeded,
     redirectPasswordCreationIfNeeded,
+    handleLogout,
 }) => {
     useEffect(() => {
         if (!redirectUserCreationIfNeeded(userData)) {
@@ -16,7 +17,7 @@ const Home: React.FC<HomeProps> = ({
     });
     return (
         <div className="App">
-            <AppBarComponent />
+            <AppBarComponent handleLogOut={handleLogout} />
             <ChatList />
         </div>
     );

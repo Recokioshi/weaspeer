@@ -7,18 +7,44 @@ export const isAuthenticated = (): boolean => {
     return !!firebaseApp.auth().currentUser;
 };
 
-export const authStateChangeListener = (onLogin: Function, onLogout: Function): firebase.Unsubscribe =>
-    firebaseApp.auth().onAuthStateChanged(user => {
-        console.group(`onAuthStateChanged user: '${user}'`);
-        if (user) {
-            console.log('exists');
-            onLogin(user.uid);
-        } else {
-            console.log('exists');
-            onLogout();
-        }
-        console.groupEnd();
-    });
+let unsubscribeAuthorizationFunction: Function | null = null;
+let unsubscribeUserDataFunction: Function | null = null;
+
+export const unsubscribeAuthorization = () => {
+    if (unsubscribeAuthorizationFunction) {
+        console.log(`auth unsubscribe`);
+        unsubscribeAuthorizationFunction();
+    }
+};
+
+export const unsubscribeUserData = () => {
+    if (unsubscribeUserDataFunction) {
+        console.log(`user data unsubscribe`);
+        unsubscribeUserDataFunction();
+    }
+};
+
+export const unsubscribeAll = () => {
+    console.log(`all unsubscribe`);
+    unsubscribeAuthorization();
+    unsubscribeUserData();
+};
+
+export const authStateChangeListener = (onLogin: Function, onLogout: Function) => {
+    if (!unsubscribeAuthorizationFunction) {
+        unsubscribeAuthorizationFunction = firebaseApp.auth().onAuthStateChanged(user => {
+            console.group(`onAuthStateChanged user: '${user}'`);
+            if (user) {
+                console.log('exists');
+                onLogin(user.uid);
+            } else {
+                console.log('exists');
+                onLogout();
+            }
+            console.groupEnd();
+        });
+    }
+};
 
 export const userDataListener = (uid: string, onUserDataLoaded: Function) => {
     const convertDbNodeToUserData = ({
@@ -33,18 +59,21 @@ export const userDataListener = (uid: string, onUserDataLoaded: Function) => {
         userData.userInfo.creationDate = creationDate;
         return userData;
     };
+    if (!unsubscribeUserDataFunction) {
+        const db = firebaseApp.firestore();
+        //const userInfo: firebase.firestore.DocumentSnapshot | void = await
 
-    const db = firebaseApp.firestore();
-    //const userInfo: firebase.firestore.DocumentSnapshot | void = await
-    db.collection(COLLECTIONS.USERS)
-        .doc(uid)
-        .onSnapshot(doc => {
-            if (doc.exists) {
-                onUserDataLoaded(convertDbNodeToUserData(doc.data() as IModelUserNode));
-            } else {
-                onUserDataLoaded(null);
-            }
-        });
+        unsubscribeUserDataFunction = db
+            .collection(COLLECTIONS.USERS)
+            .doc(uid)
+            .onSnapshot(doc => {
+                if (doc.exists) {
+                    onUserDataLoaded(convertDbNodeToUserData(doc.data() as IModelUserNode));
+                } else {
+                    onUserDataLoaded(null);
+                }
+            });
+    }
 };
 
 export const setNewUserData = (uid: string, userData: IUSerData) => {

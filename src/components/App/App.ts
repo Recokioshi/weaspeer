@@ -1,7 +1,13 @@
 import App from './AppComponent';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../../common/Redux/types';
-import { listenToAuthChanges, listenToUserData, loadPrivateKeyFromStorage } from './duck/AppOperations';
+import {
+    listenToAuthChanges,
+    listenToUserData,
+    loadPrivateKeyFromStorage,
+    stopAllListeners,
+    handleLogOutButtonClick,
+} from './duck/AppOperations';
 
 const mapStateToProps = (state: ApplicationState) => {
     const { checkingAuth, checkingUser, checkingKey, loggedIn, privateKey, userDataLoaded } = state.App;
@@ -14,6 +20,8 @@ const mapStateToProps = (state: ApplicationState) => {
         authorized,
         uid: state.App.uid,
         shouldLoadPrivateKey: authorized && !(checkingKey || privateKey),
+        stopAllListeners,
+        handleLogOutButtonClick,
     };
 };
 

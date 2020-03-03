@@ -1,10 +1,8 @@
 import firebaseApp from '../../../../common/Firebase/Firebase';
 
-export const handleLogOut = async () => {
+export const handleLogOut = (handleLogoutFromParent: Function) => {
     try {
-        console.log('before sign out');
-        await firebaseApp.auth().signOut();
-        console.log('after sign out');
+        firebaseApp.auth().signOut();
     } catch (error) {
         console.error(`sign out exception: ${error}`);
     }

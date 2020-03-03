@@ -12,37 +12,24 @@ import { AppProps } from './AppTypes';
 import Loading from '../Loading/LoadingComponent';
 import PasswordCreator from '../PasswordCreator/PasswordCreator';
 
-let unsubscribeAuthorization: Function | null = null;
-let unsubscribeUserData: Function | null = null;
-
-const setAuthChangesListener = (listenToAuthChanges: Function) => {
-    if (!unsubscribeAuthorization) {
-        unsubscribeAuthorization = listenToAuthChanges();
-    }
-};
-
-const setUserDataListener = (listenToUserData: Function, uid: string) => {
-    if (!unsubscribeUserData) {
-        unsubscribeUserData = listenToUserData(uid);
-    }
-};
-
 const App: React.FC<AppProps> = ({
     authorized,
     checkingForAuthorization,
     allDataLoaded,
     listenToAuthChanges,
     listenToUserData,
+    handleLogOutButtonClick,
+    stopAllListeners,
     loadPrivateKeyFromStorage,
     uid,
     shouldLoadPrivateKey,
 }) => {
     useEffect(() => {
-        if (!unsubscribeAuthorization) {
-            setAuthChangesListener(listenToAuthChanges);
+        if (!checkingForAuthorization && !authorized) {
+            listenToAuthChanges();
         }
-        if (!unsubscribeUserData && uid) {
-            setUserDataListener(listenToUserData, uid);
+        if (authorized) {
+            listenToUserData(uid);
         }
         if (shouldLoadPrivateKey) {
             loadPrivateKeyFromStorage(uid);
@@ -51,8 +38,7 @@ const App: React.FC<AppProps> = ({
         redirectToLoginIfNeeded(checkingForAuthorization, authorized);
 
         return () => {
-            unsubscribeAuthorization && unsubscribeAuthorization();
-            unsubscribeUserData && unsubscribeUserData();
+            stopAllListeners();
         };
     }, [authorized]);
     const renderComponent = !allDataLoaded ? (
@@ -60,7 +46,7 @@ const App: React.FC<AppProps> = ({
     ) : (
         <div>
             <Router>
-                <Home path={paths.HOME} />
+                <Home path={paths.HOME} handleLogout={handleLogOutButtonClick} />
                 <Login path={paths.LOGIN} />
                 <UserCreator path={paths.USER_CREATOR} />
                 <PasswordCreator path={paths.PASSWORD_CREATOR} />
