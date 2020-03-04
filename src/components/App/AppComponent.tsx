@@ -19,16 +19,18 @@ const App: React.FC<AppProps> = ({
     listenToAuthChanges,
     listenToUserData,
     handleLogOutButtonClick,
-    stopAllListeners,
+    authListening,
+    userListening,
     loadPrivateKeyFromStorage,
     uid,
     shouldLoadPrivateKey,
+    stopAllListeners,
 }) => {
     useEffect(() => {
-        if (!checkingForAuthorization && !authorized) {
+        if (!authListening) {
             listenToAuthChanges();
         }
-        if (authorized) {
+        if (authorized && !userListening) {
             listenToUserData(uid);
         }
         if (shouldLoadPrivateKey) {
@@ -36,11 +38,7 @@ const App: React.FC<AppProps> = ({
         }
 
         redirectToLoginIfNeeded(checkingForAuthorization, authorized);
-
-        return () => {
-            stopAllListeners();
-        };
-    }, [authorized]);
+    });
     const renderComponent = !allDataLoaded ? (
         <Loading />
     ) : (

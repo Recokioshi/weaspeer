@@ -23,6 +23,8 @@ export const appInitialState: AppState = {
     checkingUser: false,
     checkingAuth: false,
     checkingKey: false,
+    authListening: false,
+    userListening: false,
     uid: '',
     userData: initialUserData,
     userDataLoaded: false,
@@ -30,16 +32,29 @@ export const appInitialState: AppState = {
 };
 
 export default (state: AppState = appInitialState, action: AppAction): AppState => {
+    console.log(`App reducer ${action.type}`);
     switch (action.type) {
         case C.APP_USER_CHECK:
             return {
                 ...state,
                 checkingUser: true,
+                userListening: true,
+            };
+        case C.APP_USER_OFF:
+            return {
+                ...state,
+                userListening: false,
             };
         case C.APP_AUTH_CHECK:
             return {
                 ...state,
                 checkingAuth: true,
+                authListening: true,
+            };
+        case C.APP_AUTH_OFF:
+            return {
+                ...state,
+                authListening: false,
             };
         case C.APP_KEY_CHECK:
             return {
@@ -50,13 +65,16 @@ export default (state: AppState = appInitialState, action: AppAction): AppState 
             return {
                 ...appInitialState,
                 loggedIn: true,
+                authListening: state.authListening,
+                userListening: state.userListening,
                 checkingAuth: false,
                 uid: (action as AppUserLoggedInAction).uid,
             };
         case C.APP_LOGGED_OUT:
-            console.log('C.APP_LOGGED_OUT');
             return {
                 ...appInitialState,
+                authListening: state.authListening,
+                userListening: state.userListening,
             };
         case C.APP_USER_DATA_LOADED:
             return {

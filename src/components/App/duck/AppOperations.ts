@@ -6,6 +6,7 @@ import {
     authStateChangeListener,
     userDataListener,
     unsubscribeUserData,
+    unsubscribeAuthorization,
     unsubscribeAll,
 } from '../../../common/Model/model';
 import {
@@ -16,6 +17,8 @@ import {
     privateKeyLoaded,
     authChecking,
     keyChecking,
+    userStopListening,
+    authStopListening,
 } from './AppActions';
 import { IUSerData } from '../UserData';
 import { initialUserData } from './AppReducer';
@@ -59,22 +62,32 @@ export const listenToUserData = (uid: string) => (dispatch: Dispatch<AppAction>)
     }
 };
 
-export const stopUserDataListener = () => {
+export const stopAuthListener = () => (dispatch: Dispatch<AppAction>) => {
+    dispatch(userStopListening());
+    unsubscribeAuthorization();
+};
+
+export const stopUserDataListener = () => (dispatch: Dispatch<AppAction>) => {
+    dispatch(authStopListening());
     unsubscribeUserData();
 };
 
-export const stopAllListeners = () => {
+export const stopAllListeners = () => (dispatch: Dispatch<AppAction>) => {
+    dispatch(userStopListening());
+    dispatch(authStopListening());
     unsubscribeAll();
 };
 
 export const loadPrivateKeyFromStorage = (uid: string) => (dispatch: Dispatch<AppAction>) => {
+    console.log('load key');
     dispatch(keyChecking());
     const key = window.localStorage.getItem(uid);
     dispatch(privateKeyLoaded(key));
 };
 
-export const handleLogOutButtonClick = () => {
-    stopUserDataListener();
+export const handleLogOutButtonClick = () => (dispatch: Dispatch<AppAction>) => {
+    dispatch(authStopListening());
+    unsubscribeUserData();
     try {
         firebaseApp.auth().signOut();
     } catch (error) {

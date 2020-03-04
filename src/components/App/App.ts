@@ -10,18 +10,33 @@ import {
 } from './duck/AppOperations';
 
 const mapStateToProps = (state: ApplicationState) => {
-    const { checkingAuth, checkingUser, checkingKey, loggedIn, privateKey, userDataLoaded } = state.App;
+    const {
+        checkingAuth,
+        checkingUser,
+        checkingKey,
+        loggedIn,
+        privateKey,
+        userDataLoaded,
+        authListening,
+        userListening,
+    } = state.App;
     const dataIsLoading = checkingAuth || checkingUser || checkingKey;
+    console.log(
+        `dataIsLoading: checkingAuth: ${checkingAuth}, checkingUser: ${checkingUser}, checkingKey ${checkingKey}`,
+    );
     const authorized = loggedIn;
     const allDataLoaded = !dataIsLoading && (!authorized || (authorized && privateKey !== '' && userDataLoaded));
+    console.log(
+        `allDataLoaded - dataIsLoading: ${dataIsLoading}, authorized: ${authorized}, privateKey: ${privateKey}, userDataLoaded: ${userDataLoaded}`,
+    );
     return {
-        checkingForAuthorization: checkingUser,
+        checkingForAuthorization: checkingAuth,
+        authListening,
+        userListening,
         allDataLoaded: allDataLoaded,
         authorized,
         uid: state.App.uid,
         shouldLoadPrivateKey: authorized && !(checkingKey || privateKey),
-        stopAllListeners,
-        handleLogOutButtonClick,
     };
 };
 
@@ -34,6 +49,12 @@ const mapDispatchToProps = (dispatch: any) => ({
     },
     loadPrivateKeyFromStorage: (uid: string) => {
         return dispatch(loadPrivateKeyFromStorage(uid));
+    },
+    stopAllListeners: () => {
+        return dispatch(stopAllListeners());
+    },
+    handleLogOutButtonClick: () => {
+        return dispatch(handleLogOutButtonClick());
     },
 });
 
