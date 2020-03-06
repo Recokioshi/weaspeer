@@ -21,14 +21,8 @@ const mapStateToProps = (state: ApplicationState) => {
         userListening,
     } = state.App;
     const dataIsLoading = checkingAuth || checkingUser || checkingKey;
-    console.log(
-        `dataIsLoading: checkingAuth: ${checkingAuth}, checkingUser: ${checkingUser}, checkingKey ${checkingKey}`,
-    );
     const authorized = loggedIn;
     const allDataLoaded = !dataIsLoading && (!authorized || (authorized && privateKey !== '' && userDataLoaded));
-    console.log(
-        `allDataLoaded - dataIsLoading: ${dataIsLoading}, authorized: ${authorized}, privateKey: ${privateKey}, userDataLoaded: ${userDataLoaded}`,
-    );
     return {
         checkingForAuthorization: checkingAuth,
         authListening,

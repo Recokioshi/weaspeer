@@ -46,8 +46,8 @@ const App: React.FC<AppProps> = ({
             <Router>
                 <Home path={paths.HOME} handleLogout={handleLogOutButtonClick} />
                 <Login path={paths.LOGIN} />
-                <UserCreator path={paths.USER_CREATOR} />
-                <PasswordCreator path={paths.PASSWORD_CREATOR} />
+                <UserCreator path={paths.CREATE_USER} />
+                <PasswordCreator path={paths.CREATE_PASSWORD} />
                 <NotFound default />
             </Router>
         </div>

@@ -11,10 +11,12 @@ const Home: React.FC<HomeProps> = ({
     handleLogout,
 }) => {
     useEffect(() => {
+        console.log(`userData: ${userData}`);
         if (!redirectUserCreationIfNeeded(userData)) {
             redirectPasswordCreationIfNeeded(privateKey, userData);
         }
     });
+    console.log('HOME');
     return (
         <div className="App">
             <AppBarComponent handleLogOut={handleLogout} />

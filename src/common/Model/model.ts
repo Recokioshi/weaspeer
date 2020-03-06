@@ -12,7 +12,6 @@ let unsubscribeUserDataFunction: Function | null = null;
 
 export const unsubscribeAuthorization = () => {
     if (unsubscribeAuthorizationFunction) {
-        console.log(`auth unsubscribe`);
         unsubscribeAuthorizationFunction();
         unsubscribeAuthorizationFunction = null;
     }
@@ -20,28 +19,22 @@ export const unsubscribeAuthorization = () => {
 
 export const unsubscribeUserData = () => {
     if (unsubscribeUserDataFunction) {
-        console.log(`user data unsubscribe`);
         unsubscribeUserDataFunction();
         unsubscribeUserDataFunction = null;
     }
 };
 
 export const unsubscribeAll = () => {
-    console.log(`all unsubscribe`);
     unsubscribeAuthorization();
     unsubscribeUserData();
 };
 
 export const authStateChangeListener = (onLogin: Function, onLogout: Function) => {
     if (!unsubscribeAuthorizationFunction) {
-        console.log('listen to auth');
         unsubscribeAuthorizationFunction = firebaseApp.auth().onAuthStateChanged(user => {
-            console.group(`onAuthStateChanged user: '${user}'`);
             if (user) {
-                console.log('login');
                 onLogin(user.uid);
             } else {
-                console.log('logout');
                 onLogout();
             }
             console.groupEnd();
@@ -65,13 +58,11 @@ export const userDataListener = (uid: string, onUserDataLoaded: Function) => {
     if (!unsubscribeUserDataFunction) {
         const db = firebaseApp.firestore();
         //const userInfo: firebase.firestore.DocumentSnapshot | void = await
-        console.log('listen to user data');
         unsubscribeUserDataFunction = db
             .collection(COLLECTIONS.USERS)
             .doc(uid)
             .onSnapshot(doc => {
                 if (doc.exists) {
-                    console.log('user data loaded');
                     onUserDataLoaded(convertDbNodeToUserData(doc.data() as IModelUserNode));
                 } else {
                     onUserDataLoaded(null);

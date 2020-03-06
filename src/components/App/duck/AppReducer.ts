@@ -32,7 +32,6 @@ export const appInitialState: AppState = {
 };
 
 export default (state: AppState = appInitialState, action: AppAction): AppState => {
-    console.log(`App reducer ${action.type}`);
     switch (action.type) {
         case C.APP_USER_CHECK:
             return {

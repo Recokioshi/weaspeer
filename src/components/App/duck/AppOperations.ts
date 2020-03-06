@@ -79,7 +79,6 @@ export const stopAllListeners = () => (dispatch: Dispatch<AppAction>) => {
 };
 
 export const loadPrivateKeyFromStorage = (uid: string) => (dispatch: Dispatch<AppAction>) => {
-    console.log('load key');
     dispatch(keyChecking());
     const key = window.localStorage.getItem(uid);
     dispatch(privateKeyLoaded(key));
