@@ -1,8 +1,8 @@
-import { RsaCreator } from '../../../common/Encryption/RsaCreator';
-import { IUSerData } from '../../App/UserData';
-import { setNewUserData } from '../../../common/Model/model';
+import { RsaCreator } from '../../../../common/Encryption/RsaCreator';
+import { IUSerData } from '../../../App/UserData';
+import { setNewUserData } from '../../../../common/Model/model';
 import { navigate } from '@reach/router';
-import { paths } from '../../../common/Router/constants';
+import { paths } from '../../../../common/Router/constants';
 
 export type PasswordCreatorInputs = {
   newPassword: String;

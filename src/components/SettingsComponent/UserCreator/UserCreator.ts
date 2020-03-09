@@ -1,6 +1,6 @@
 import UserCreator from './UserCreatorComponent';
 import { connect } from 'react-redux';
-import { ApplicationState } from '../../common/Redux/types';
+import { ApplicationState } from '../../../common/Redux/types';
 import { UserCreatorStateProps, UserCreatorDispatchProps, UserCreatorOwnProps } from './UserCreatorTypes';
 import { validateNewUserData, saveNewUserData } from './duck/UserCreatorOperations';
 

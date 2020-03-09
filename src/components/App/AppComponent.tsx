@@ -1,6 +1,7 @@
 import Home from '../Home/Home';
 import Login from '../Login/Login';
-import UserCreator from '../UserCreator/UserCreator';
+import UserCreator from '../SettingsComponent/UserCreator/UserCreator';
+import Settings from '../SettingsComponent/Settings';
 import NotFound from '../NotFound/NotFound';
 
 import { redirectToLoginIfNeeded } from './duck/AppOperations';
@@ -10,66 +11,63 @@ import React, { useEffect } from 'react';
 import { Router } from '@reach/router';
 import { AppProps } from './AppTypes';
 import Loading from '../Loading/LoadingComponent';
-import PasswordCreator from '../PasswordCreator/PasswordCreator';
-
-let unsubscribeAuthorization: Function | null = null;
-let unsubscribeUserData: Function | null = null;
-
-const setAuthChangesListener = (listenToAuthChanges: Function) => {
-  if (!unsubscribeAuthorization) {
-    unsubscribeAuthorization = listenToAuthChanges();
-  }
-};
-
-const setUserDataListener = (listenToUserData: Function, uid: string) => {
-  if (!unsubscribeUserData) {
-    unsubscribeUserData = listenToUserData(uid);
-  }
-};
+import PasswordCreator from '../SettingsComponent/PasswordCreator/PasswordCreator';
+import AppBarComponent from '../AppBar/AppBarComponent';
 
 const App: React.FC<AppProps> = ({
-  authorized,
-  checkingForAuthorization,
-  allDataLoaded,
-  listenToAuthChanges,
-  listenToUserData,
-  loadPrivateKeyFromStorage,
-  uid,
-  shouldLoadPrivateKey,
+    authorized,
+    checkingForAuthorization,
+    allDataLoaded,
+    listenToAuthChanges,
+    listenToUserData,
+    handleLogOutButtonClick,
+    authListening,
+    userListening,
+    loadPrivateKeyFromStorage,
+    uid,
+    shouldLoadPrivateKey,
+    stopAllListeners,
 }) => {
-  useEffect(() => {
-    if (!unsubscribeAuthorization) {
-      setAuthChangesListener(listenToAuthChanges);
-    }
-    if (!unsubscribeUserData && uid) {
-      setUserDataListener(listenToUserData, uid);
-    }
-    if (shouldLoadPrivateKey) {
-      loadPrivateKeyFromStorage(uid);
-    }
+    useEffect(() => {
+        if (!authListening) {
+            listenToAuthChanges();
+        }
+        if (authorized && !userListening) {
+            listenToUserData(uid);
+        }
+        if (shouldLoadPrivateKey) {
+            loadPrivateKeyFromStorage(uid);
+        }
 
-    redirectToLoginIfNeeded(checkingForAuthorization, authorized);
+        redirectToLoginIfNeeded(checkingForAuthorization, authorized);
+    });
+    const renderComponent = !allDataLoaded ? (
+        <Loading />
+    ) : (
+        <div>
+            {authorized ? (
+                <AppBarComponent handleLogOut={handleLogOutButtonClick}>
+                    <Router>
+                        <Login path={paths.LOGIN} />
+                        <Home path={paths.HOME} />
+                        <Settings path={paths.SETTINGS} />
+                        <NotFound default />
+                    </Router>
+                </AppBarComponent>
+            ) : (
+                <Router>
+                    <Login path={paths.LOGIN} />
+                    <UserCreator path={paths.CREATE_USER} />
+                    <PasswordCreator path={paths.CREATE_PASSWORD} />
+                </Router>
+            )}
+            <Router>
+                <NotFound default />
+            </Router>
+        </div>
+    );
 
-    return () => {
-      unsubscribeAuthorization && unsubscribeAuthorization();
-      unsubscribeUserData && unsubscribeUserData();
-    };
-  }, [authorized]);
-  const renderComponent = !allDataLoaded ? (
-    <Loading />
-  ) : (
-    <div>
-      <Router>
-        <Home path={paths.HOME} />
-        <Login path={paths.LOGIN} />
-        <UserCreator path={paths.USER_CREATOR} />
-        <PasswordCreator path={paths.PASSWORD_CREATOR} />
-        <NotFound default />
-      </Router>
-    </div>
-  );
-
-  return renderComponent;
+    return renderComponent;
 };
 
 export default App;

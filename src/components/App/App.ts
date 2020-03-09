@@ -1,32 +1,55 @@
 import App from './AppComponent';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../../common/Redux/types';
-import { listenToAuthChanges, listenToUserData, loadPrivateKeyFromStorage } from './duck/AppOperations';
+import {
+    listenToAuthChanges,
+    listenToUserData,
+    loadPrivateKeyFromStorage,
+    stopAllListeners,
+    handleLogOutButtonClick,
+} from './duck/AppOperations';
 
 const mapStateToProps = (state: ApplicationState) => {
-  const { checkingAuth, checkingUser, checkingKey, loggedIn, privateKey, userDataLoaded } = state.App;
-  const dataIsLoading = checkingAuth || checkingUser || checkingKey;
-  const allDataLoaded = !dataIsLoading && loggedIn && privateKey !== '' && userDataLoaded;
-  const authorized = state.App.loggedIn;
-  return {
-    checkingForAuthorization: checkingUser,
-    allDataLoaded: allDataLoaded,
-    authorized: state.App.loggedIn,
-    uid: state.App.uid,
-    shouldLoadPrivateKey: authorized && !(checkingKey || privateKey),
-  };
+    const {
+        checkingAuth,
+        checkingUser,
+        checkingKey,
+        loggedIn,
+        privateKey,
+        userDataLoaded,
+        authListening,
+        userListening,
+    } = state.App;
+    const dataIsLoading = checkingAuth || checkingUser || checkingKey;
+    const authorized = loggedIn;
+    const allDataLoaded = !dataIsLoading && (!authorized || (authorized && privateKey !== '' && userDataLoaded));
+    return {
+        checkingForAuthorization: checkingAuth,
+        authListening,
+        userListening,
+        allDataLoaded: allDataLoaded,
+        authorized,
+        uid: state.App.uid,
+        shouldLoadPrivateKey: authorized && !(checkingKey || privateKey),
+    };
 };
 
 const mapDispatchToProps = (dispatch: any) => ({
-  listenToAuthChanges: (): firebase.Unsubscribe => {
-    return dispatch(listenToAuthChanges());
-  },
-  listenToUserData: (uid: string) => {
-    return dispatch(listenToUserData(uid));
-  },
-  loadPrivateKeyFromStorage: (uid: string) => {
-    return dispatch(loadPrivateKeyFromStorage(uid));
-  },
+    listenToAuthChanges: (): firebase.Unsubscribe => {
+        return dispatch(listenToAuthChanges());
+    },
+    listenToUserData: (uid: string) => {
+        return dispatch(listenToUserData(uid));
+    },
+    loadPrivateKeyFromStorage: (uid: string) => {
+        return dispatch(loadPrivateKeyFromStorage(uid));
+    },
+    stopAllListeners: () => {
+        return dispatch(stopAllListeners());
+    },
+    handleLogOutButtonClick: () => {
+        return dispatch(handleLogOutButtonClick());
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

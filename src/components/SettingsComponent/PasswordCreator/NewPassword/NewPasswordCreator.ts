@@ -1,12 +1,12 @@
-import ExistingPasswordComponent from './ExistingPasswordComponent';
+import NewPasswordCreator from './NewPasswordCreatorComponent';
 import { connect } from 'react-redux';
-import { ApplicationState } from '../../../common/Redux/types';
+import { ApplicationState } from '../../../../common/Redux/types';
 import {
   PasswordCreatorEditStateProps,
   PasswordCreatorEditDispatchProps,
   PasswordCreatorEditOwnProps,
 } from '../PasswordCreatorTypes';
-import { validateNewPassword, restorePasswordFromDb } from '../duck/PasswordCreatorOperations';
+import { validateNewPassword, saveNewPassword } from '../duck/PasswordCreatorOperations';
 
 const mapStateToProps = (
   state: ApplicationState,
@@ -14,7 +14,7 @@ const mapStateToProps = (
 ): PasswordCreatorEditStateProps => {
   const uid = state.App.uid;
   return {
-    handlePasswordSubmit: restorePasswordFromDb(uid, state.App.userData),
+    handlePasswordSubmit: saveNewPassword(uid, state.App.userData),
     validateNewPassword,
     ...ownProps,
   };
@@ -30,4 +30,4 @@ export default connect<
 >(
   mapStateToProps,
   mapDispatchToProps,
-)(ExistingPasswordComponent);
+)(NewPasswordCreator);
