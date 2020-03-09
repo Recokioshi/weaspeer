@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react';
 import { HomeProps } from './HomeTypes';
 import ChatList from '../ChatList/ChatList';
-import AppBarComponent from './AppBar/AppBar';
 
 const Home: React.FC<HomeProps> = ({
     userData,
     privateKey,
     redirectUserCreationIfNeeded,
     redirectPasswordCreationIfNeeded,
-    handleLogout,
 }) => {
     useEffect(() => {
         console.log(`userData: ${userData}`);
@@ -19,9 +17,7 @@ const Home: React.FC<HomeProps> = ({
     console.log('HOME');
     return (
         <div className="App">
-            <AppBarComponent handleLogOut={handleLogout}>
-                <ChatList />
-            </AppBarComponent>
+            <ChatList />
         </div>
     );
 };

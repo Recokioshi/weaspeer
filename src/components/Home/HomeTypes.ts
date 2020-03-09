@@ -31,8 +31,6 @@ type HomeStateProps = {
 
 type HomeDispatchProps = {};
 
-export type HomeOwnProps = {
-    handleLogout: () => void;
-} & RouteComponentProps;
+export type HomeOwnProps = {} & RouteComponentProps;
 
 export type HomeProps = HomeStateProps & HomeDispatchProps & HomeOwnProps;

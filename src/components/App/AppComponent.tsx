@@ -12,6 +12,7 @@ import { Router } from '@reach/router';
 import { AppProps } from './AppTypes';
 import Loading from '../Loading/LoadingComponent';
 import PasswordCreator from '../SettingsComponent/PasswordCreator/PasswordCreator';
+import AppBarComponent from '../AppBar/AppBarComponent';
 
 const App: React.FC<AppProps> = ({
     authorized,
@@ -44,12 +45,23 @@ const App: React.FC<AppProps> = ({
         <Loading />
     ) : (
         <div>
+            {authorized ? (
+                <AppBarComponent handleLogOut={handleLogOutButtonClick}>
+                    <Router>
+                        <Login path={paths.LOGIN} />
+                        <Home path={paths.HOME} />
+                        <Settings path={paths.SETTINGS} />
+                        <NotFound default />
+                    </Router>
+                </AppBarComponent>
+            ) : (
+                <Router>
+                    <Login path={paths.LOGIN} />
+                    <UserCreator path={paths.CREATE_USER} />
+                    <PasswordCreator path={paths.CREATE_PASSWORD} />
+                </Router>
+            )}
             <Router>
-                <Home path={paths.HOME} handleLogout={handleLogOutButtonClick} />
-                <Login path={paths.LOGIN} />
-                <UserCreator path={paths.CREATE_USER} />
-                <PasswordCreator path={paths.CREATE_PASSWORD} />
-                <Settings path={paths.SETTINGS} />
                 <NotFound default />
             </Router>
         </div>
