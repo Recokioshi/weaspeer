@@ -1,6 +1,6 @@
 import AppBar from './AppBarComponent';
 import { connect } from 'react-redux';
-import { ApplicationState } from '../../../common/Redux/types';
+import { ApplicationState } from '../../common/Redux/types';
 import { AppBarOwnProps, AppBarStateProps, AppBarDispatchProps } from './AppBarTypes';
 import { Dispatch } from 'redux';
 

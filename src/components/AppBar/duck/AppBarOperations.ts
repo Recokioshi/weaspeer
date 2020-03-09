@@ -1,4 +1,4 @@
-import firebaseApp from '../../../../common/Firebase/Firebase';
+import firebaseApp from '../../../common/Firebase/Firebase';
 
 export const handleLogOut = (handleLogoutFromParent: Function) => {
     try {
