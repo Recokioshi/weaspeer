@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import { backgroundColorDark } from '../../../common/Styles/material-uiStyles';
+import { backgroundColorDark } from '../../../../common/Styles/material-uiStyles';
 import { makeStyles } from '@material-ui/core/styles';
 import { PasswordCreatorEditProps } from '../PasswordCreatorTypes';
 import { PasswordValidationResults } from '../duck/PasswordCreatorOperations';

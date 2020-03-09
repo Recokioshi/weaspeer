@@ -1,6 +1,7 @@
 import Home from '../Home/Home';
 import Login from '../Login/Login';
-import UserCreator from '../UserCreator/UserCreator';
+import UserCreator from '../SettingsComponent/UserCreator/UserCreator';
+import Settings from '../SettingsComponent/Settings';
 import NotFound from '../NotFound/NotFound';
 
 import { redirectToLoginIfNeeded } from './duck/AppOperations';
@@ -10,7 +11,7 @@ import React, { useEffect } from 'react';
 import { Router } from '@reach/router';
 import { AppProps } from './AppTypes';
 import Loading from '../Loading/LoadingComponent';
-import PasswordCreator from '../PasswordCreator/PasswordCreator';
+import PasswordCreator from '../SettingsComponent/PasswordCreator/PasswordCreator';
 
 const App: React.FC<AppProps> = ({
     authorized,
@@ -48,6 +49,7 @@ const App: React.FC<AppProps> = ({
                 <Login path={paths.LOGIN} />
                 <UserCreator path={paths.CREATE_USER} />
                 <PasswordCreator path={paths.CREATE_PASSWORD} />
+                <Settings path={paths.SETTINGS} />
                 <NotFound default />
             </Router>
         </div>
