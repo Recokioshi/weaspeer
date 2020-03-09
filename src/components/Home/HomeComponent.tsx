@@ -19,8 +19,9 @@ const Home: React.FC<HomeProps> = ({
     console.log('HOME');
     return (
         <div className="App">
-            <AppBarComponent handleLogOut={handleLogout} />
-            <ChatList />
+            <AppBarComponent handleLogOut={handleLogout}>
+                <ChatList />
+            </AppBarComponent>
         </div>
     );
 };

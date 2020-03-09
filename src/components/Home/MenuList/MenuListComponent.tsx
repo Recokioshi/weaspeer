@@ -10,6 +10,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import PeopleIcon from '@material-ui/icons/People';
 import ForumIcon from '@material-ui/icons/Forum';
 import SettingsIcon from '@material-ui/icons/Settings';
+import { MenuListProps } from './MenuListTypes';
 
 const drawerWidth = 240;
 
@@ -32,7 +33,13 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const MenuList = ({ handleDrawerToggle, mobileOpen }: any) => {
+export const MenuList: React.FC<MenuListProps> = ({
+    handleDrawerToggle,
+    mobileOpen,
+    redirectToChats,
+    redirectToFriends,
+    redirectToSettings,
+}) => {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -41,13 +48,13 @@ export const MenuList = ({ handleDrawerToggle, mobileOpen }: any) => {
             <div className={classes.toolbar} />
             <Divider />
             <List>
-                <ListItem button key={'chats'}>
+                <ListItem button key={'chats'} onClick={redirectToChats}>
                     <ListItemIcon>
                         <ForumIcon />
                     </ListItemIcon>
                     <ListItemText primary={'Chats'} />
                 </ListItem>
-                <ListItem button key={'friends'}>
+                <ListItem button key={'friends'} onClick={redirectToFriends}>
                     <ListItemIcon>
                         <PeopleIcon />
                     </ListItemIcon>
@@ -56,7 +63,7 @@ export const MenuList = ({ handleDrawerToggle, mobileOpen }: any) => {
             </List>
             <Divider />
             <List>
-                <ListItem button key={'settings'}>
+                <ListItem button key={'settings'} onClick={redirectToSettings}>
                     <ListItemIcon>
                         <SettingsIcon />
                     </ListItemIcon>

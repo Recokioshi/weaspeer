@@ -39,10 +39,10 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const AppBarComponent: React.FC<AppBarProps> = ({ handleLogOut }) => {
+const AppBarComponent: React.FC<AppBarProps> = ({ handleLogOut, children }) => {
     const classes = useStyles();
     const [mobileOpen, setMobileOpen] = React.useState(false);
-    const handleDrawerToggle = () => {
+    const handleDrawerToggle = (): void => {
         setMobileOpen(!mobileOpen);
     };
 
@@ -68,7 +68,10 @@ const AppBarComponent: React.FC<AppBarProps> = ({ handleLogOut }) => {
                 </Toolbar>
             </AppBar>
             <MenuList handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} />
-            <main className={classes.content} />
+            <main className={classes.content}>
+                <div className={classes.toolbar} />
+                {children}
+            </main>
         </div>
     );
 };
