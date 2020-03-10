@@ -4,13 +4,16 @@ import { ApplicationState } from '../../../common/Redux/types';
 import { UserCreatorStateProps, UserCreatorDispatchProps, UserCreatorOwnProps } from './UserCreatorTypes';
 import { validateNewUserData, saveNewUserData } from './duck/UserCreatorOperations';
 
-const mapStateToProps = (state: ApplicationState, ownProps: UserCreatorOwnProps): UserCreatorStateProps => ({
-    uid: state.App.uid,
-    userInfo: state.App.userData.userInfo,
-    validateNewUserData,
-    saveNewUserData,
-    ...ownProps,
-});
+const mapStateToProps = (state: ApplicationState, ownProps: UserCreatorOwnProps): UserCreatorStateProps => {
+    const { userData, uid } = state.App;
+    return {
+        uid: uid,
+        userInfo: userData.userInfo,
+        validateNewUserData,
+        saveNewUserData: saveNewUserData(userData),
+        ...ownProps,
+    };
+};
 
 const mapDispatchToProps = (dispatch: any) => ({});
 
