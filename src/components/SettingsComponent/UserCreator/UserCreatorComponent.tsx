@@ -77,7 +77,6 @@ const UserCreator: React.FC<UserCreatorProps> = ({
     const Wrapper: React.FC = ({ children }) => {
         return standalone ? (
             <Container component="main" maxWidth="xs">
-                <CssBaseline />
                 <Paper className={styles.createUserForm}>{children}</Paper>
             </Container>
         ) : (
@@ -87,6 +86,7 @@ const UserCreator: React.FC<UserCreatorProps> = ({
 
     return (
         <Wrapper>
+            <CssBaseline />
             <form onSubmit={onSubmit}>
                 <Box display="flex" flexDirection="column" alignItems="center">
                     <Typography>User Info</Typography>
