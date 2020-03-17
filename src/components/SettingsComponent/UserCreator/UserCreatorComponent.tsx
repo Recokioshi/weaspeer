@@ -1,11 +1,9 @@
 import React, { useState, ChangeEvent } from 'react';
 
-import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { backgroundColorDark } from '../../../common/Styles/material-uiStyles';
@@ -16,6 +14,7 @@ import Alert from '../../Alert/AlertComponent';
 import { UserData } from '../../App/UserData';
 import { navigate } from '@reach/router';
 import { paths } from '../../../common/Router/constants';
+import SettingsWrapper from '../SettingsWrapper/SettingsWrapper';
 
 const useStyles = makeStyles(theme => ({
     background: {
@@ -74,18 +73,9 @@ const UserCreator: React.FC<UserCreatorProps> = ({
         }
     };
 
-    const Wrapper: React.FC = ({ children }) => {
-        return standalone ? (
-            <Container component="main" maxWidth="xs">
-                <Paper className={styles.createUserForm}>{children}</Paper>
-            </Container>
-        ) : (
-            <div>{children}</div>
-        );
-    };
-
     return (
-        <Wrapper>
+        <SettingsWrapper standalone={standalone} styles={styles}>
+            {' '}
             <CssBaseline />
             <form onSubmit={onSubmit}>
                 <Box display="flex" flexDirection="column" alignItems="center">
@@ -122,7 +112,7 @@ const UserCreator: React.FC<UserCreatorProps> = ({
                     </Button>
                 </Box>
             </form>
-        </Wrapper>
+        </SettingsWrapper>
     );
 };
 

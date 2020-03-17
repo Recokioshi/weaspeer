@@ -1,12 +1,9 @@
 import React, { useState, ChangeEvent } from 'react';
 
-import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { backgroundColorDark } from '../../../../common/Styles/material-uiStyles';
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,6 +13,7 @@ import {
     PasswordValidationResults,
     PasswordCreatorInputs,
 } from '../duck/PasswordCreatorOperations';
+import SettingsWrapper from '../../SettingsWrapper/SettingsWrapper';
 import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles(theme => ({
@@ -42,7 +40,7 @@ const onChangeSetValue = (setValueFunction: (newVal: string) => void) => (event:
 const NewPasswordCreator: React.FC<PasswordCreatorEditProps> = ({
     handlePasswordSubmit,
     passwordSavedCallback,
-    standalone,
+    standalone = true,
 }) => {
     const styles = useStyles();
     const [newPassword, setNewPassword] = useState('');
@@ -69,19 +67,8 @@ const NewPasswordCreator: React.FC<PasswordCreatorEditProps> = ({
         }
     };
 
-    const Wrapper: React.FC = ({ children }) => {
-        return standalone ? (
-            <Container component="main" maxWidth="xs">
-                <CssBaseline />
-                <Paper className={styles.createUserForm}>{children}</Paper>
-            </Container>
-        ) : (
-            <div>{children}</div>
-        );
-    };
-
     return (
-        <Wrapper>
+        <SettingsWrapper standalone={standalone} styles={styles}>
             <form onSubmit={onSubmit}>
                 <Box display="flex" flexDirection="column" alignItems="center">
                     <Typography>Set password</Typography>
@@ -112,7 +99,7 @@ const NewPasswordCreator: React.FC<PasswordCreatorEditProps> = ({
                     </Button>
                 </Box>
             </form>
-        </Wrapper>
+        </SettingsWrapper>
     );
 };
 

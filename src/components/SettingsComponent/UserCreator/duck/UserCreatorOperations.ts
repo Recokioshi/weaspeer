@@ -21,6 +21,16 @@ export const validateNewUserData = (userInputs: UserCreatorInputs): UserInfoVali
     return validationMessages;
 };
 
-export const saveNewUserData = (userData: IUSerData, uid: string) => {
-    setNewUserData(uid, userData);
+export const saveNewUserData = (oldUserData: IUSerData) => (userData: IUSerData, uid: string) => {
+    const { firstName, lastName, username } = userData.userInfo;
+    const newUserData = {
+        ...oldUserData,
+        userInfo: {
+            ...oldUserData.userInfo,
+            firstName,
+            lastName,
+            username,
+        },
+    };
+    setNewUserData(uid, newUserData);
 };

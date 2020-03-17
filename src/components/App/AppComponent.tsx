@@ -61,9 +61,6 @@ const App: React.FC<AppProps> = ({
                     <PasswordCreator path={paths.CREATE_PASSWORD} />
                 </Router>
             )}
-            <Router>
-                <NotFound default />
-            </Router>
         </div>
     );
 
