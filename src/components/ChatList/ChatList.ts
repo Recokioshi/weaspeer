@@ -5,12 +5,13 @@ import { ChatListOwnProps, ChatListStateProps, ChatListDispatchProps } from './C
 import { Dispatch } from 'redux';
 
 const mapStateToProps = (state: ApplicationState, ownProps: ChatListOwnProps): ChatListStateProps => ({
-  roomList: state.App.userData.chatList as string[],
+    roomList: state.App.userData.chatList as string[],
+    ...ownProps
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, ownProps: ChatListOwnProps) => ({});
 
 export default connect<ChatListStateProps, ChatListDispatchProps, ChatListOwnProps, ApplicationState>(
-  mapStateToProps,
-  mapDispatchToProps,
+    mapStateToProps,
+    mapDispatchToProps
 )(ChatList);

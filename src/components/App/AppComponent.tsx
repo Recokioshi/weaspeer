@@ -13,6 +13,7 @@ import { AppProps } from './AppTypes';
 import Loading from '../Loading/LoadingComponent';
 import PasswordCreator from '../SettingsComponent/PasswordCreator/PasswordCreator';
 import AppBarComponent from '../AppBar/AppBarComponent';
+import ChatList from '../ChatList/ChatList';
 
 const App: React.FC<AppProps> = ({
     authorized,
@@ -26,7 +27,7 @@ const App: React.FC<AppProps> = ({
     loadPrivateKeyFromStorage,
     uid,
     shouldLoadPrivateKey,
-    stopAllListeners,
+    stopAllListeners
 }) => {
     useEffect(() => {
         if (!authListening) {
@@ -51,6 +52,7 @@ const App: React.FC<AppProps> = ({
                         <Login path={paths.LOGIN} />
                         <Home path={paths.HOME} />
                         <Settings path={paths.SETTINGS} />
+                        <ChatList path={paths.CHATS} />
                         <NotFound default />
                     </Router>
                 </AppBarComponent>
