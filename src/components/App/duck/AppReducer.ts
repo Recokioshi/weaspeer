@@ -4,18 +4,19 @@ import {
     AppAction,
     AppUserLoggedInAction,
     AppUserDataLoadedAction,
-    AppPrivateKeyLoadedAction,
+    AppPrivateKeyLoadedAction
 } from '../AppTypes';
 
 export const initialUserData = {
     chatList: [],
+    friendsList: [],
     rsaKey: '',
     userInfo: {
         creationDate: new Date(),
         firstName: '',
         lastName: '',
-        username: '',
-    },
+        username: ''
+    }
 };
 
 export const appInitialState: AppState = {
@@ -28,7 +29,7 @@ export const appInitialState: AppState = {
     uid: '',
     userData: initialUserData,
     userDataLoaded: false,
-    privateKey: '',
+    privateKey: ''
 };
 
 export default (state: AppState = appInitialState, action: AppAction): AppState => {
@@ -37,28 +38,28 @@ export default (state: AppState = appInitialState, action: AppAction): AppState 
             return {
                 ...state,
                 checkingUser: true,
-                userListening: true,
+                userListening: true
             };
         case C.APP_USER_OFF:
             return {
                 ...state,
-                userListening: false,
+                userListening: false
             };
         case C.APP_AUTH_CHECK:
             return {
                 ...state,
                 checkingAuth: true,
-                authListening: true,
+                authListening: true
             };
         case C.APP_AUTH_OFF:
             return {
                 ...state,
-                authListening: false,
+                authListening: false
             };
         case C.APP_KEY_CHECK:
             return {
                 ...state,
-                checkingKey: true,
+                checkingKey: true
             };
         case C.APP_LOGGED_IN:
             return {
@@ -67,20 +68,20 @@ export default (state: AppState = appInitialState, action: AppAction): AppState 
                 authListening: state.authListening,
                 userListening: state.userListening,
                 checkingAuth: false,
-                uid: (action as AppUserLoggedInAction).uid,
+                uid: (action as AppUserLoggedInAction).uid
             };
         case C.APP_LOGGED_OUT:
             return {
                 ...appInitialState,
                 authListening: state.authListening,
-                userListening: state.userListening,
+                userListening: state.userListening
             };
         case C.APP_USER_DATA_LOADED:
             return {
                 ...state,
                 userData: (action as AppUserDataLoadedAction).userData,
                 checkingUser: false,
-                userDataLoaded: true,
+                userDataLoaded: true
             };
         case C.APP_PRIVATE_KEY_LOADED:
             return { ...state, privateKey: (action as AppPrivateKeyLoadedAction).key, checkingKey: false };

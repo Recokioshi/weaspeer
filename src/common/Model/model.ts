@@ -50,8 +50,9 @@ export const userDataListener = (uid: string, onUserDataLoaded: Function) => {
         username,
         rsaKey,
         chatList,
+        friendsList
     }: IModelUserNode) => {
-        const userData = new UserData(firstName, lastName, username, rsaKey, chatList);
+        const userData = new UserData(firstName, lastName, username, rsaKey, chatList, friendsList);
         userData.userInfo.creationDate = creationDate;
         return userData;
     };

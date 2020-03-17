@@ -14,6 +14,7 @@ import Loading from '../Loading/LoadingComponent';
 import PasswordCreator from '../SettingsComponent/PasswordCreator/PasswordCreator';
 import AppBarComponent from '../AppBar/AppBarComponent';
 import ChatList from '../ChatList/ChatList';
+import FriendsList from '../FriendsList/FriendsList';
 
 const App: React.FC<AppProps> = ({
     authorized,
@@ -53,6 +54,7 @@ const App: React.FC<AppProps> = ({
                         <Home path={paths.HOME} />
                         <Settings path={paths.SETTINGS} />
                         <ChatList path={paths.CHATS} />
+                        <FriendsList path={paths.FRIENDS} />
                         <NotFound default />
                     </Router>
                 </AppBarComponent>
