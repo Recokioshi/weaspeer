@@ -15,6 +15,7 @@ import PasswordCreator from '../SettingsComponent/PasswordCreator/PasswordCreato
 import AppBarComponent from '../AppBar/AppBarComponent';
 import ChatList from '../ChatList/ChatList';
 import FriendsList from '../FriendsList/FriendsList';
+import NewFriend from '../FriendsList/NewFriend/NewFriend';
 
 const App: React.FC<AppProps> = ({
     authorized,
@@ -55,6 +56,7 @@ const App: React.FC<AppProps> = ({
                         <Settings path={paths.SETTINGS} />
                         <ChatList path={paths.CHATS} />
                         <FriendsList path={paths.FRIENDS} />
+                        <NewFriend path={paths.NEW_FRIEND} />
                         <NotFound default />
                     </Router>
                 </AppBarComponent>
